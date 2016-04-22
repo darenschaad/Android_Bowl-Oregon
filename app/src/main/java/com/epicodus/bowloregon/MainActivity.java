@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -13,6 +14,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String TAG = MainActivity.class.getSimpleName();
     @Bind(R.id.buttonScores) Button mButtonScores;
     @Bind(R.id.buttonStats) Button mButtonStats;
+    @Bind(R.id.buttonAlleys) Button mButtonAlleys;
+    @Bind(R.id.editTextBowlLocation) EditText mEditTextBowlLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mButtonScores.setOnClickListener(this);
         mButtonStats.setOnClickListener(this);
+        mButtonAlleys.setOnClickListener(this);
     }
 
     @Override
@@ -35,6 +39,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent1 = new Intent(MainActivity.this, ScoresActivity.class);
                 startActivity(intent1);
                 break;
+            case R.id.buttonAlleys:
+                String location = mEditTextBowlLocation.getText().toString();
+                Intent intent2 = new Intent(MainActivity.this, MapsActivity.class);
+                intent2.putExtra("location", location);
+                startActivity(intent2);
             default:
                 break;
         }

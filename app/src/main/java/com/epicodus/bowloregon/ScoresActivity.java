@@ -33,6 +33,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
 
         mButtonEnterScores.setOnClickListener(this);
         mButtonViewStats.setOnClickListener(this);
+
     }
 
     @Override
@@ -45,6 +46,14 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
                 enteredDatesArray.add(enteredDate);
                 String enteredLocation = mEditTextLocation.getText().toString();
                 enteredLocationsArray.add(enteredLocation);
+                break;
+            case R.id.buttonViewStats:
+
+                Intent intent1 = new Intent(ScoresActivity.this, StatsActivity.class);
+                intent1.putStringArrayListExtra("enteredScoresArray", enteredScoresArray);
+                intent1.putStringArrayListExtra("enteredDatesArray", enteredDatesArray);
+                intent1.putStringArrayListExtra("enteredLocationsArray", enteredLocationsArray);
+                startActivity(intent1);
 
         }
     }

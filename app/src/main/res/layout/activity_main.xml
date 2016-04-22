@@ -62,4 +62,21 @@
         android:layout_toRightOf="@+id/buttonScores"
         android:layout_toEndOf="@+id/buttonScores" />
 
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextBowlLocation"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:hint="Enter Zip Code or Location"
+        android:padding="5dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Find Alleys"
+        android:id="@+id/buttonAlleys"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/editTextBowlLocation"/>
+
 </RelativeLayout>

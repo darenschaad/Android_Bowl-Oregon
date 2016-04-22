@@ -9,4 +9,61 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.epicodus.bowloregon.StatsActivity">
 
+    <ListView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewScores"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="60dp" />
+
+    <ListView
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewDates"
+        android:layout_alignTop="@+id/listViewScores"
+        android:layout_toRightOf="@+id/listViewScores"
+        android:layout_toEndOf="@+id/listViewScores" />
+
+    <ListView
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewLocations"
+        android:layout_alignTop="@+id/listViewDates"
+        android:layout_toRightOf="@+id/listViewDates"
+        android:layout_toEndOf="@+id/listViewDates" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score"
+        android:id="@+id/textViewScore"
+        android:layout_above="@+id/listViewDates"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:textSize="25sp"
+        android:layout_alignRight="@+id/listViewScores"
+        android:layout_alignEnd="@+id/listViewScores" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date"
+        android:id="@+id/textViewDateText"
+        android:textSize="25sp"
+        android:layout_above="@+id/listViewDates"
+        android:layout_alignLeft="@+id/listViewDates"
+        android:layout_alignStart="@+id/listViewDates"
+        android:layout_toLeftOf="@+id/listViewLocations"
+        android:layout_toStartOf="@+id/listViewLocations" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:id="@+id/textViewLocationText"
+        android:textSize="25sp"
+        android:layout_above="@+id/listViewDates"
+        android:layout_toRightOf="@+id/textViewDateText"
+        android:layout_toEndOf="@+id/textViewDateText" />
 </RelativeLayout>

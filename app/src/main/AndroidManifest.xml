@@ -11,8 +11,6 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/NoActionBarTheme">
-
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -29,6 +27,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.epicodus.bowloregon.MainActivity" />
         </activity>
+        <activity android:name=".MapsActivity"></activity>
     </application>
 
 </manifest>
