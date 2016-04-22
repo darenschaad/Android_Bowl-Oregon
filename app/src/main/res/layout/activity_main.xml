@@ -15,9 +15,9 @@
         android:layout_width="fill_parent"
         android:layout_height="150dp"
         android:id="@+id/imageView"
-        android:src="@drawable/BowlingCover"
         android:background="@color/colorBackground"
-        android:layout_below="@+id/tvTitle"/>
+        android:layout_below="@+id/tvTitle"
+        android:src="@drawable/bowlingup"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -39,17 +39,27 @@
         android:text="Enter Scores"
         android:id="@+id/buttonScores"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/tvTitle"
+        android:layout_alignStart="@+id/tvTitle" />
 
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:id="@+id/imageView2"
-        android:src="@drawable/BowlingTrial"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/imageView"/>
+        android:layout_below="@+id/imageView"
+        android:src="@drawable/bowlingdown" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="View Stats"
+        android:id="@+id/buttonStats"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/buttonScores"
+        android:layout_toEndOf="@+id/buttonScores" />
 
 </RelativeLayout>
