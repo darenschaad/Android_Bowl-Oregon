@@ -11,9 +11,7 @@
         <activity
             android:name=".MainActivity"
             android:theme="@style/NoActionBarTheme">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.epicodus.bowloregon.MainActivity" />
+
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,8 +19,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StatsActivity" />
-        <activity android:name=".ScoresActivity"></activity>
+        <activity android:name=".StatsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.epicodus.bowloregon.MainActivity" />
+        </activity>
+        <activity android:name=".ScoresActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.epicodus.bowloregon.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
