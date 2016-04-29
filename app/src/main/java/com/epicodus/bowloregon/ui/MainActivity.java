@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.buttonScores) Button mButtonScores;
     @Bind(R.id.buttonStats) Button mButtonStats;
     @Bind(R.id.buttonAlleys) Button mButtonAlleys;
-    @Bind(R.id.editTextBowlLocation) EditText mEditTextBowlLocation;
+//    @Bind(R.id.editTextBowlLocation) EditText mEditTextBowlLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent1);
                 break;
             case R.id.buttonAlleys:
-                String location = mEditTextBowlLocation.getText().toString();
+//                String location = mEditTextBowlLocation.getText().toString();
                 Intent intent2 = new Intent(MainActivity.this, MapsActivity.class);
-                intent2.putExtra("location", location);
+//                intent2.putExtra("location", location);
                 startActivity(intent2);
             default:
                 break;
