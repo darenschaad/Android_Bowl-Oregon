@@ -17,6 +17,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.buttonScores) Button mButtonScores;
     @Bind(R.id.buttonStats) Button mButtonStats;
     @Bind(R.id.buttonAlleys) Button mButtonAlleys;
+    @Bind(R.id.buttonYelp) Button mButtonYelp;
+    @Bind(R.id.editTextLocation) EditText mLocationEditText;
 //    @Bind(R.id.editTextBowlLocation) EditText mEditTextBowlLocation;
 
     @Override
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonScores.setOnClickListener(this);
         mButtonStats.setOnClickListener(this);
         mButtonAlleys.setOnClickListener(this);
+        mButtonYelp.setOnClickListener(this);
     }
 
     @Override
@@ -46,6 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent2 = new Intent(MainActivity.this, MapsActivity.class);
 //                intent2.putExtra("location", location);
                 startActivity(intent2);
+            case R.id.buttonYelp:
+                String location = mLocationEditText.getText().toString();
+                Intent intent3 = new Intent(MainActivity.this, YelpActivity.class);
+                intent3.putExtra("location", location);
+                startActivity(intent3);
             default:
                 break;
         }

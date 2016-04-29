@@ -69,7 +69,24 @@
         android:layout_height="wrap_content"
         android:text="Find Alleys"
         android:id="@+id/buttonAlleys"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/imageView2"/>
+        android:layout_below="@+id/imageView2"
+        android:layout_alignRight="@+id/buttonStats"
+        android:layout_alignEnd="@+id/buttonStats" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yelp Alleys"
+        android:id="@+id/buttonYelp"
+        android:layout_below="@+id/imageView2"
+        android:layout_toLeftOf="@+id/buttonStats"
+        android:layout_toStartOf="@+id/buttonStats" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextLocation"
+        android:layout_below="@+id/buttonAlleys"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

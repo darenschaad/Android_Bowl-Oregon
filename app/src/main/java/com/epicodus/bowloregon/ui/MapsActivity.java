@@ -3,6 +3,7 @@ package com.epicodus.bowloregon.ui;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -39,6 +40,7 @@ public class MapsActivity extends AppCompatActivity {
                     builder = new PlacePicker.IntentBuilder();
                     Intent intent = builder.build(MapsActivity.this);
                     startActivityForResult(intent, PLACE_PICKER_FLAG);
+                    Log.d(TAG, String.valueOf(mMyLocation));
 
                 } catch (GooglePlayServicesRepairableException e) {
                     GooglePlayServicesUtil
@@ -61,7 +63,10 @@ public class MapsActivity extends AppCompatActivity {
                 case PLACE_PICKER_FLAG:
                     Place place = PlacePicker.getPlace(data, this);
                     mMyLocation.setText(place.getName() + ", " +place.getAddress());
+                    place.getLatLng();
+                    Log.d(TAG, String.valueOf(place));
                     break;
+
             }
         }
     }
