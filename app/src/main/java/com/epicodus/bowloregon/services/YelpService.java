@@ -1,5 +1,7 @@
 package com.epicodus.bowloregon.services;
 
+import android.util.Log;
+
 import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.models.Alley;
 
@@ -43,8 +45,10 @@ public class YelpService {
                 .url(url)
                 .build();
 
+
         Call call = client.newCall(request);
         call.enqueue(callback);
+        Log.d("URL ", "" + request);
     }
 
     public ArrayList<Alley> processResults(Response response) {
@@ -57,8 +61,32 @@ public class YelpService {
                 for (int i = 0; i < businessesJSON.length(); i++) {
                     JSONObject alleyJSON = businessesJSON.getJSONObject(i);
                     String name = alleyJSON.getString("name");
-                    Alley alley = new Alley(name);
+                    String phone = alleyJSON.optString("display_phone", "Phone not available");
+                    String website = alleyJSON.getString("url");
+                    double rating = alleyJSON.getDouble("rating");
+                    String imageUrl = alleyJSON.getString("image_url");
+                    double latitude = alleyJSON.getJSONObject("location")
+                            .getJSONObject("coordinate").getDouble("latitude");
+                    double longitude = alleyJSON.getJSONObject("location")
+                            .getJSONObject("coordinate").getDouble("longitude");
+                    ArrayList<String> address = new ArrayList<>();
+                    JSONArray addressJSON = alleyJSON.getJSONObject("location")
+                            .getJSONArray("display_address");
+                    for (int y = 0; y < addressJSON.length(); y++) {
+                        address.add(addressJSON.get(y).toString());
+                    }
+                    Alley alley = new Alley(name, phone, website, rating,
+                            imageUrl, address, latitude, longitude);
                     alleys.add(alley);
+//                    Log.d("name", alley.getName());
+//                    Log.d("phone", alley.getPhone());
+//                    Log.d("website", alley.getWebsite());
+//                    Log.d("rating", String.valueOf(alley.getRating()));
+//                    Log.d("image", alley.getImageUrl());
+//                    Log.d("lat", String.valueOf(alley.getLatitude()));
+//                    Log.d("long", String.valueOf(alley.getLongitude()));
+//                    Log.d("address", alley.getAddress().get(0));
+
                 }
             }
         } catch (IOException e) {

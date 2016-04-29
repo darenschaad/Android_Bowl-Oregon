@@ -38,7 +38,8 @@
                 android:value=".ui.MainActivity" />
         </activity>
         <activity android:name=".ui.MapsActivity" />
-        <activity android:name=".ui.YelpActivity"></activity>
+        <activity android:name=".ui.YelpActivity" />
+        <activity android:name=".ui.AlleyDetailActivity"></activity>
     </application>
 
 </manifest>
