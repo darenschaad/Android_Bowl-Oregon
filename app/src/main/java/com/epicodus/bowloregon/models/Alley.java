@@ -30,11 +30,13 @@ public class Alley {
         this.mPhone = phone;
         this.mWebsite = website;
         this.mRating = rating;
-        this.mImageUrl = imageUrl;
+        mImageUrl = getLargeImageURL(imageUrl);
         this.mAddress = address;
         this.mLatitude = latitude;
         this.mLongitude = longitude;
     }
+
+
 
     public String getName() {
         return mName;
@@ -66,5 +68,10 @@ public class Alley {
 
     public double getLongitude() {
         return mLongitude;
+    }
+
+    public String getLargeImageURL(String imageUrl) {
+        String largeImageUrl = imageUrl.substring(0, imageUrl.length() - 6).concat("o.jpg");
+        return largeImageUrl;
     }
 }

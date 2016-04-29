@@ -25,6 +25,8 @@ import butterknife.ButterKnife;
  * Created by Guest on 4/29/16.
  */
 public class AlleyListAdapter extends RecyclerView.Adapter<AlleyListAdapter.AlleyViewHolder> {
+    private static final int MAX_WIDTH = 200;
+    private static final int MAX_HEIGHT = 200;
     private ArrayList<Alley> mAlleys = new ArrayList<>();
     private Context mContext;
 
@@ -77,7 +79,11 @@ public class AlleyListAdapter extends RecyclerView.Adapter<AlleyListAdapter.Alle
         }
 
         public void bindAlley(Alley alley) {
-            Picasso.with(mContext).load(alley.getImageUrl()).into(mAlleyImageView);
+            Picasso.with(mContext)
+                    .load(alley.getImageUrl())
+                    .resize(MAX_WIDTH, MAX_HEIGHT)
+                    .centerCrop()
+                    .into(mAlleyImageView);
             mNameTextView.setText(alley.getName());
             mCategoryTextView.setText(alley.getPhone());
             mRatingTextView.setText("Rating: " + alley.getRating() + "/5");
