@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.epicodus.bowloregon">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:theme="@style/NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,17 +20,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".StatsActivity">
+        <activity android:name=".ui.StatsActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.epicodus.bowloregon.MainActivity" />
+                android:value=".ui.MainActivity" />
         </activity>
-        <activity android:name=".ScoresActivity">
+        <activity android:name=".ui.ScoresActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.epicodus.bowloregon.MainActivity" />
+                android:value=".ui.MainActivity" />
         </activity>
-        <activity android:name=".MapsActivity"></activity>
+        <activity android:name=".ui.MapsActivity"></activity>
     </application>
 
 </manifest>

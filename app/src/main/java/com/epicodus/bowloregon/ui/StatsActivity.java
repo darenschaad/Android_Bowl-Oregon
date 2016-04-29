@@ -1,10 +1,12 @@
-package com.epicodus.bowloregon;
+package com.epicodus.bowloregon.ui;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import com.epicodus.bowloregon.R;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;

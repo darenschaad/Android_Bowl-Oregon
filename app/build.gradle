@@ -17,11 +17,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        it.buildConfigField 'String', 'PLACES_KEY', PlacesKey
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'se.akerfeldt:okhttp-signpost:1.1.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
 }
