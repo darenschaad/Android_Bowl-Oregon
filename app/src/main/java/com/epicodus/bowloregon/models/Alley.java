@@ -1,10 +1,14 @@
 package com.epicodus.bowloregon.models;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 
 /**
  * Created by Guest on 4/29/16.
  */
+
+@Parcel
 public class Alley {
     private String mName;
     private String mPhone;
@@ -14,6 +18,8 @@ public class Alley {
     private ArrayList<String> mAddress = new ArrayList<>();
     private double mLatitude;
     private double mLongitude;
+
+    public Alley() {}
 
 
 

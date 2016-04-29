@@ -1,6 +1,7 @@
 package com.epicodus.bowloregon.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,10 @@ import android.widget.TextView;
 
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.models.Alley;
+import com.epicodus.bowloregon.ui.AlleyDetailActivity;
 import com.squareup.picasso.Picasso;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -59,6 +63,17 @@ public class AlleyListAdapter extends RecyclerView.Adapter<AlleyListAdapter.Alle
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    int itemPosition = getLayoutPosition();
+                    Intent intent = new Intent(mContext, AlleyDetailActivity.class);
+                    intent.putExtra("position", itemPosition + "");
+                    intent.putExtra("alleys", Parcels.wrap(mAlleys));
+                    mContext.startActivity(intent);
+                }
+            });
         }
 
         public void bindAlley(Alley alley) {
