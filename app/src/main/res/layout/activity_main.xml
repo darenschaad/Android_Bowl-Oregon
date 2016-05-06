@@ -87,6 +87,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/editTextLocation"
         android:layout_below="@+id/buttonAlleys"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:hint="Enter Location or Zip Code" />
 
 </RelativeLayout>
