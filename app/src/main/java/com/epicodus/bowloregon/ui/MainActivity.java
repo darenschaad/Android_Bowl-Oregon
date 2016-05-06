@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent2 = new Intent(MainActivity.this, MapsActivity.class);
 //                intent2.putExtra("location", location);
                 startActivity(intent2);
+                break;
             case R.id.buttonYelp:
                 String location = mLocationEditText.getText().toString();
                 Intent intent3 = new Intent(MainActivity.this, YelpActivity.class);
