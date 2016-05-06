@@ -75,8 +75,14 @@ public class YelpService {
                     for (int y = 0; y < addressJSON.length(); y++) {
                         address.add(addressJSON.get(y).toString());
                     }
+                    ArrayList<String> categories = new ArrayList<>();
+                    JSONArray categoriesJSON = alleyJSON.getJSONArray("categories");
+
+                    for (int y = 0; y < categoriesJSON.length(); y++) {
+                        categories.add(categoriesJSON.getJSONArray(y).get(0).toString());
+                    }
                     Alley alley = new Alley(name, phone, website, rating,
-                            imageUrl, address, latitude, longitude);
+                            imageUrl, address, latitude, longitude, categories);
                     alleys.add(alley);
 //                    Log.d("name", alley.getName());
 //                    Log.d("phone", alley.getPhone());
