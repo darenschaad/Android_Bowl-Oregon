@@ -36,11 +36,12 @@ public class AlleyDetailFragment extends Fragment implements View.OnClickListene
     private static final int MAX_HEIGHT = 300;
     @Bind(R.id.alleyImageView) ImageView mImageLabel;
     @Bind(R.id.alleyNameTextView) TextView mNameLabel;
-    @Bind(R.id.websiteTextView) TextView mWebsiteLabel;
+    @Bind(R.id.categoryTextView) TextView mCategoryLabel;
     @Bind(R.id.ratingTextView) TextView mRatingLabel;
     @Bind(R.id.phoneTextView) TextView mPhoneLabel;
     @Bind(R.id.addressTextView) TextView mAddressLabel;
     @Bind(R.id.saveAlleyButton) Button mSaveAlleyButton;
+    @Bind(R.id.websiteTextView) TextView mWebsiteLabel;
 
     private Alley mAlley;
     private SharedPreferences mSharedPreferences;
@@ -72,13 +73,14 @@ public class AlleyDetailFragment extends Fragment implements View.OnClickListene
                 .centerCrop()
                 .into(mImageLabel);
         mNameLabel.setText(mAlley.getName());
-        mWebsiteLabel.setText(mAlley.getWebsite());
+        mCategoryLabel.setText(android.text.TextUtils.join(", ", mAlley.getCategories()));
         mRatingLabel.setText(Double.toString(mAlley.getRating()) + "/5");
         mPhoneLabel.setText(mAlley.getPhone());
         mAddressLabel.setText(android.text.TextUtils.join(", ", mAlley.getAddress()));
         mAddressLabel.setOnClickListener(this);
         mPhoneLabel.setOnClickListener(this);
         mSaveAlleyButton.setOnClickListener(this);
+        mWebsiteLabel.setOnClickListener(this);
 
         return view;
     }
@@ -99,12 +101,17 @@ public class AlleyDetailFragment extends Fragment implements View.OnClickListene
         }
         if (v == mSaveAlleyButton) {
             String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-            Firebase userRestaurantsFirebaseRef = new Firebase(Constants.FIREBASE_URL_ALLEYS).child(userUid);
-            Firebase pushRef = userRestaurantsFirebaseRef.push();
-            String restaurantPushId = pushRef.getKey();
-            mAlley.setPushId(restaurantPushId);
+            Firebase userAlleysFirebaseRef = new Firebase(Constants.FIREBASE_URL_ALLEYS).child(userUid);
+            Firebase pushRef = userAlleysFirebaseRef.push();
+            String alleyPushId = pushRef.getKey();
+            mAlley.setPushId(alleyPushId);
             pushRef.setValue(mAlley);
             Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
+        }
+        if (v == mWebsiteLabel) {
+            Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(mAlley.getWebsite()));
+            startActivity(webIntent);
         }
     }
 

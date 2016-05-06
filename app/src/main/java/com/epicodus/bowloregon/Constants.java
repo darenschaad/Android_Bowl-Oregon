@@ -27,4 +27,6 @@ public class Constants {
     public static final String FIREBASE_URL_USERS = FIREBASE_URL + "/" + FIREBASE_LOCATION_USERS;
     public static final String FIREBASE_LOCATION_ALLEYS = "alleys";
     public static final String FIREBASE_URL_ALLEYS = FIREBASE_URL + "/" + FIREBASE_LOCATION_ALLEYS;
+    public static final String FIREBASE_LOCATION_GAMES = "games";
+    public static final String FIREBASE_URL_GAMES = FIREBASE_URL + "/" + FIREBASE_LOCATION_GAMES;
 }

@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Something"
-                android:id="@+id/websiteTextView"
+                android:id="@+id/categoryTextView"
                 android:layout_below="@+id/alleyNameTextView"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -77,7 +77,18 @@
                 android:paddingTop="20dp"
                 android:paddingRight="30dp">
 
-
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View on Yelp"
+                    android:id="@+id/websiteTextView"
+                    android:drawableLeft="@drawable/ic_exit_to_app_white_18dp"
+                    android:drawablePadding="4dp"
+                    android:textColor="@color/colorTextIcons"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center" />
 
                 <TextView
                     android:layout_width="wrap_content"
