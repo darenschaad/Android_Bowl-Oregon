@@ -10,17 +10,16 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:background="#ffffff"
-        android:layout_height="90dp"
+        android:layout_height="190dp"
         android:paddingLeft="10dp"
         android:paddingTop="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp">
+        android:paddingRight="10dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/scoreTextView"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:textStyle="bold"
             android:text="Score"
             android:textColor="@color/colorPrimary"/>
@@ -29,9 +28,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bowling Alley"
-            android:id="@+id/alleyTextView"
+            android:id="@+id/bowlingAlleyNameTextView"
             android:textStyle="italic"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimary"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -48,7 +48,8 @@
                 android:layout_alignParentRight="true"
                 android:textColor="@color/colorAccent"
                 android:layout_alignParentEnd="true"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:paddingBottom="5dp" />
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

@@ -36,13 +36,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
-//        String signupEmail = mSharedPreferences.getString(Constants.KEY_USER_EMAIL, null);
-//        if (signupEmail != null) {
-//            mEmailEditText.setText(signupEmail);
-//        }
         mRegisterTextView.setOnClickListener(this);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
         mSharedPreferencesEditor = mSharedPreferences.edit();
+        String signupEmail = mSharedPreferences.getString(Constants.KEY_USER_EMAIL, null);
+        if (signupEmail != null) {
+            mEmailEditText.setText(signupEmail);
+        }
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
         mPasswordLoginButton.setOnClickListener(this);
 

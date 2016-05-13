@@ -2,6 +2,7 @@ package com.epicodus.bowloregon.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.game_list_item, parent, false);
         GameViewHolder viewHolder = new GameViewHolder(view, mGames);
         return viewHolder;
+
     }
     @Override
     public void onBindViewHolder(GameViewHolder holder, int position) {

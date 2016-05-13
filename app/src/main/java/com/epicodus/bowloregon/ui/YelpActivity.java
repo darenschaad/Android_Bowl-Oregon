@@ -51,15 +51,13 @@ public class YelpActivity extends AppCompatActivity {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
 
-        if (mRecentAddress != null) {
-            getAlleys(mRecentAddress);
-        }
-        else {
-
-            Intent intent = getIntent();
-            String location = intent.getStringExtra("location");
-
+        Intent intent = getIntent();
+        String location = intent.getStringExtra("location");
+        if (!(location.equals(""))) {
             getAlleys(location);
+        }
+        else if (mRecentAddress != null){
+            getAlleys(mRecentAddress);
         }
 
     }

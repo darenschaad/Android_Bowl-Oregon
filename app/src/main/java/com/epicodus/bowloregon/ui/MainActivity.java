@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Firebase mUserRef;
     private String mUid;
     private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mSharedPreferencesEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mSharedPreferencesEditor = mSharedPreferences.edit();
         mUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUid);
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
@@ -119,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.buttonYelp:
                 String location = mLocationEditText.getText().toString();
+                mSharedPreferencesEditor.putString(Constants.PREFERENCES_LOCATION_KEY, location).apply();
                 Intent intent3 = new Intent(MainActivity.this, YelpActivity.class);
                 intent3.putExtra("location", location);
                 startActivity(intent3);
