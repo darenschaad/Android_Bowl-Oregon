@@ -1,16 +1,28 @@
 package com.epicodus.bowloregon.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.preference.PreferenceManager;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.epicodus.bowloregon.Constants;
@@ -25,6 +37,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+//    public class MainActivity extends AppCompatActivity implements View.OnClickListener, SensorEventListener {
     public static final String TAG = MainActivity.class.getSimpleName();
     @Bind(R.id.buttonScores) Button mButtonScores;
     @Bind(R.id.buttonStats) Button mButtonStats;
@@ -32,14 +45,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.buttonYelp) Button mButtonYelp;
     @Bind(R.id.editTextLocation) EditText mLocationEditText;
     @Bind(R.id.welcomeTextView) TextView mWelcomeTextView;
+    @Bind(R.id.ballImageView) ImageView mBallImageView;
 //    @Bind(R.id.editTextBowlLocation) EditText mEditTextBowlLocation;
 
+//    private GestureDetectorCompat mBallImageViewDetector;
     private ValueEventListener mUserRefListener;
     private Firebase mFirebaseRef;
     private Firebase mUserRef;
     private String mUid;
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mSharedPreferencesEditor;
+    Context mContext;
+//    private SensorManager mSensorManager;
+//    private Sensor mSensor;
+//    private long lastUpdate = 0;
+//    private float last_x, last_y, last_z;
+//    private static final int SHAKE_THRESHOLD = 1000;
+//    private static final String DEBUG_TAG = "Gestures";
+//    public Animation flingAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +70,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+//        flingAnimation = AnimationUtils.loadAnimation(mContext, R.anim.ball_animation);
+//        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+//        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+//        mSensorManager.registerListener(this, mSensor, mSensorManager.SENSOR_DELAY_NORMAL);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mSharedPreferencesEditor = mSharedPreferences.edit();
         mUid = mSharedPreferences.getString(Constants.KEY_UID, null);
@@ -69,7 +96,53 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+//        mBallImageViewDetector = new GestureDetectorCompat(this, new BallImageViewGestureListener());
+//        mBallImageView.setOnTouchListener(new View.OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent event) {
+//                mBallImageViewDetector.onTouchEvent(event);
+//                return true;
+//            }
+//        });
     }
+
+//    @Override
+//    public void onSensorChanged(SensorEvent event) {
+//        Sensor sensor = event.sensor;
+//
+//        if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+//            float x = event.values[0];
+//            float y = event.values[1];
+//            float z = event.values[2];
+//
+//            long curTime = System.currentTimeMillis();
+//
+//            if ((curTime - lastUpdate) > 100 ) {
+//                long diffTime = (curTime - lastUpdate);
+//                lastUpdate = curTime;
+//
+//                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
+//
+//                if (speed > SHAKE_THRESHOLD) {
+//                    Log.d("SensorEventListener", "shaking");
+//
+//                    mBallImageView.startAnimation(flingAnimation);
+//
+//
+//
+//
+//                    last_x = x;
+//                    last_y = y;
+//                    last_z = z;
+//
+//                }
+//            }
+//        }
+//    }
+
+//    @Override
+//    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -131,5 +204,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
+
+//    class BallImageViewGestureListener extends GestureDetector.SimpleOnGestureListener {
+//        @Override
+//        public boolean onFling(MotionEvent event1, MotionEvent event2,
+//                               float velocityX, float velocityY) {
+////            Animation flingAnimation = AnimationUtils.loadAnimation(mContext, R.anim.boomerang_fling_animation);
+//            mBallImageView.startAnimation(flingAnimation);
+////            mImageView.animate().scaleX(0.0f).scaleY(0.0f).setDuration(500);
+////            mImageView.animate().scaleX(1f).scaleY(1f).setDuration(500);
+//
+//            Log.d(DEBUG_TAG, "onFling: " + event1.toString()+event2.toString());
+//            return true;
+//        }
+//    }
 
 }
