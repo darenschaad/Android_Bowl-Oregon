@@ -79,29 +79,28 @@
 
 
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Find Alleys"
-        android:id="@+id/buttonAlleys"
-        android:layout_below="@+id/imageView2"
-        android:layout_alignRight="@+id/buttonStats"
-        android:layout_alignEnd="@+id/buttonStats" />
+    <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Find Alleys"-->
+        <!--android:id="@+id/buttonAlleys"-->
+        <!--android:layout_below="@+id/imageView2"-->
+        <!--android:layout_alignRight="@+id/buttonStats"-->
+        <!--android:layout_alignEnd="@+id/buttonStats" />-->
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Yelp Alleys"
+        android:text="Search Alleys"
         android:id="@+id/buttonYelp"
         android:layout_below="@+id/imageView2"
-        android:layout_toLeftOf="@+id/buttonStats"
-        android:layout_toStartOf="@+id/buttonStats" />
+        android:layout_centerHorizontal="true" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/editTextLocation"
-        android:layout_below="@+id/buttonAlleys"
+        android:layout_below="@+id/buttonYelp"
         android:layout_centerHorizontal="true"
         android:hint="Enter Location or Zip Code" />
 

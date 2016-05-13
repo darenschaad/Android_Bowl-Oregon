@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String TAG = MainActivity.class.getSimpleName();
     @Bind(R.id.buttonScores) Button mButtonScores;
     @Bind(R.id.buttonStats) Button mButtonStats;
-    @Bind(R.id.buttonAlleys) Button mButtonAlleys;
+//    @Bind(R.id.buttonAlleys) Button mButtonAlleys;
     @Bind(R.id.buttonYelp) Button mButtonYelp;
     @Bind(R.id.editTextLocation) EditText mLocationEditText;
     @Bind(R.id.welcomeTextView) TextView mWelcomeTextView;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
         mButtonScores.setOnClickListener(this);
         mButtonStats.setOnClickListener(this);
-        mButtonAlleys.setOnClickListener(this);
+//        mButtonAlleys.setOnClickListener(this);
         mButtonYelp.setOnClickListener(this);
 
         mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
@@ -113,15 +113,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent1 = new Intent(MainActivity.this, ScoresActivity.class);
                 startActivity(intent1);
                 break;
-            case R.id.buttonAlleys:
-//                String location = mEditTextBowlLocation.getText().toString();
-                Intent intent2 = new Intent(MainActivity.this, MapsActivity.class);
-//                intent2.putExtra("location", location);
-                startActivity(intent2);
-                break;
+//            case R.id.buttonAlleys:
+////                String location = mEditTextBowlLocation.getText().toString();
+//                Intent intent2 = new Intent(MainActivity.this, MapsActivity.class);
+////                intent2.putExtra("location", loc97232ation);
+//                startActivity(intent2);
+//                break;
             case R.id.buttonYelp:
                 String location = mLocationEditText.getText().toString();
+                if (!(location.equals(""))) {
                 mSharedPreferencesEditor.putString(Constants.PREFERENCES_LOCATION_KEY, location).apply();
+            }
                 Intent intent3 = new Intent(MainActivity.this, YelpActivity.class);
                 intent3.putExtra("location", location);
                 startActivity(intent3);
