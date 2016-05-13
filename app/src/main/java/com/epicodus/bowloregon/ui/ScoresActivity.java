@@ -31,7 +31,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
     @Bind(R.id.buttonViewStats) Button mButtonViewStats;
     @Bind(R.id.editTextScore) EditText mEditTextScore;
     @Bind(R.id.editTextDate) EditText mEditTextDate;
-    @Bind(R.id.locationSpinner) Spinner mLocationSpinner;
+    @Bind(R.id.locationEditText) EditText mLocationEditText;
 
     private SharedPreferences mSharedPreferences;
     private Query mQuery;
@@ -50,7 +50,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
         mFirebaseAlleysRef = new Firebase(Constants.FIREBASE_URL_ALLEYS);
         setUpFirebaseQuery();
 //        populateAlleySpinner();
-        addItemsOnSpinner();
+//        addItemsOnSpinner();
     }
 
     private void setUpFirebaseQuery() {
@@ -59,15 +59,15 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
         mQuery = new Firebase(location);
     }
 
-    public void addItemsOnSpinner() {
-//        mAdapter = new FirebaseAlleyArrayAdapter(mQuery, Alley.class);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.alleys_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        mLocationSpinner.setAdapter(adapter);
+//    public void addItemsOnSpinner() {
+////        mAdapter = new FirebaseAlleyArrayAdapter(mQuery, Alley.class);
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.alleys_array, android.R.layout.simple_spinner_item);
+//        // Specify the layout to use when the list of choices appears
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        // Apply the adapter to the spinner
+//        mLocationSpinner.setAdapter(adapter);
 
-    }
+//    }
 
 //    private void populateAlleySpinner() {
 //        mAdapter = new FirebaseAlleyArrayAdapter(mQuery, Alley.class);
@@ -78,9 +78,11 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
 //        mLocationSpinner.setAdapter(adapter);
 //    }
 
-    private void createGameInFirebaseHelper(final double score, final String date, final String alleyId) {
-        final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES);
-        Game newGame = new Game(score, date, alleyId);
+    private void createGameInFirebaseHelper(final double score, final String date, final String alleyName) {
+        String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+        final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid);
+        Game newGame = new Game(score, date, alleyName);
+        newGame.setPushId(userUid);
         gameLocation.setValue(newGame);
     }
 
@@ -90,8 +92,8 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.buttonEnterScores:
                 double enteredScore = Double.parseDouble(mEditTextScore.getText().toString());
                 String enteredDate = mEditTextDate.getText().toString();
-                String enteredLocation = mLocationSpinner.getSelectedItem().toString();
-                String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+                String enteredLocation = mLocationEditText.getText().toString();
+
 //                Game game = new Game(enteredScore, enteredDate, enteredLocation);
 //                Firebase userGamesFirebaseRef = new Firebase(Constants.FIREBASE_URL_ALLEYS).child(userUid);
 //                Firebase pushRef = userGamesFirebaseRef.push();
@@ -99,6 +101,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
 //                pushRef.setValue(game);
                 createGameInFirebaseHelper(enteredScore, enteredDate, enteredLocation);
                 Toast.makeText(this, "Game Saved!", Toast.LENGTH_SHORT).show();
+                mEditTextScore.setText("");
 
                 break;
             case R.id.buttonViewStats:

@@ -36,6 +36,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+//        String signupEmail = mSharedPreferences.getString(Constants.KEY_USER_EMAIL, null);
+//        if (signupEmail != null) {
+//            mEmailEditText.setText(signupEmail);
+//        }
         mRegisterTextView.setOnClickListener(this);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
         mSharedPreferencesEditor = mSharedPreferences.edit();
@@ -62,7 +66,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     public void loginWithPassword() {
-        String email = mEmailEditText.getText().toString();
+        final String email = mEmailEditText.getText().toString();
         String password = mPasswordEditText.getText().toString();
 
         if (email.equals("")) {
@@ -74,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             mFirebaseRef.authWithPassword(email, password, new Firebase.AuthResultHandler(){
                 @Override
                 public void onAuthenticated(AuthData authData){
+                    mSharedPreferencesEditor.putString(Constants.KEY_USER_EMAIL, email).apply();
                     mAuthProgressDialog.dismiss();
                     if(authData != null){
                         String userUid = authData.getUid();

@@ -6,14 +6,15 @@ package com.epicodus.bowloregon.models;
 public class Game {
     private double score;
     private String date;
-    private String alleyId;
+    private String alleyName;
+    private String pushId;
 
     public Game() {}
 
-    public Game(double score, String date, String alleyId) {
+    public Game(double score, String date, String alleyName) {
         this.score = score;
         this.date = date;
-        this.alleyId = alleyId;
+        this.alleyName = alleyName;
     }
 
     public String getDate() {
@@ -23,11 +24,19 @@ public class Game {
     public double getScore() {
         return score;
     }
-    public String getAlleyId() {
-        return alleyId;
+    public String getAlleyName() {
+        return alleyName;
     }
 
-    public void setAlleyId(String pushId) {
-        this.alleyId = alleyId;
+    public void setAlleyName(String pushId) {
+        this.alleyName = alleyName;
+    }
+
+    public String getPushId() {
+        return pushId;
+    }
+
+    public void setPushId(String pushId) {
+        this.pushId = pushId;
     }
 }

@@ -8,7 +8,7 @@ import android.os.Build;
 public class Constants {
     public static final String PLACES_KEY = BuildConfig.PLACES_KEY;
 
-    public static final String PLACES_BASE_URL = "https://";
+    public static final String KEY_USER_EMAIL = "email";
 
     public static final String YELP_CONSUMER_KEY = BuildConfig.YELP_CONSUMER_KEY;
     public static final String YELP_CONSUMER_SECRET = BuildConfig.YELP_CONSUMER_SECRET;
