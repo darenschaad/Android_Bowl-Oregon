@@ -30,12 +30,12 @@ public class GameListAdapter extends RecyclerView.Adapter<GameViewHolder> {
         return viewHolder;
     }
     @Override
-    public void onBindViewHolder(GamesViewHolder holder, int position) {
-        holder.bindGames(mGamess.get(position));
+    public void onBindViewHolder(GameViewHolder holder, int position) {
+        holder.bindGame(mGames.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return mGamess.size();
+        return mGames.size();
     }
 }

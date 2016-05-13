@@ -16,9 +16,6 @@ import butterknife.ButterKnife;
 
 public class StatsActivity extends AppCompatActivity {
 
-    @Bind(R.id.listViewScores) ListView mListViewScores;
-    @Bind(R.id.listViewDates) ListView mListViewDates;
-    @Bind(R.id.listViewLocations) ListView mListViewLocations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
