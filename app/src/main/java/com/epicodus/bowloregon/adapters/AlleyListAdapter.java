@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.models.Alley;
 import com.epicodus.bowloregon.ui.AlleyDetailActivity;
+import com.epicodus.bowloregon.util.ItemTouchHelperViewHolder;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -52,7 +53,7 @@ public class AlleyListAdapter extends RecyclerView.Adapter<AlleyListAdapter.Alle
         return mAlleys.size();
     }
 
-    public class AlleyViewHolder extends RecyclerView.ViewHolder {
+    public class AlleyViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
         @Bind(R.id.alleyImageView)
         ImageView mAlleyImageView;
         @Bind(R.id.alleyNameTextView) TextView mNameTextView;
@@ -61,6 +62,23 @@ public class AlleyListAdapter extends RecyclerView.Adapter<AlleyListAdapter.Alle
         TextView mRatingTextView;
         private Context mContext;
 
+
+        @Override
+        public void onItemSelected() {
+            itemView.animate()
+                    .alpha(0.7f)
+                    .scaleX(0.9f)
+                    .scaleY(0.9f)
+                    .setDuration(500);
+        }
+
+        @Override
+        public void onItemClear() {
+            itemView.animate()
+                    .alpha(1f)
+                    .scaleX(1f)
+                    .scaleY(1f);
+        }
         public AlleyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -77,6 +95,8 @@ public class AlleyListAdapter extends RecyclerView.Adapter<AlleyListAdapter.Alle
                 }
             });
         }
+
+
 
         public void bindAlley(Alley alley) {
             Picasso.with(mContext)

@@ -48,7 +48,7 @@
         <activity android:name=".ui.AlleyDetailActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.YelpActivity" />
+                android:value=".ui.MainActivity" />
         </activity>
         <activity android:name=".ui.CreateAccountActivity" />
         <activity android:name=".ui.LoginActivity">

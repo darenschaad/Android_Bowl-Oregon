@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.adapters.AlleyPagerAdapter;
 import com.epicodus.bowloregon.models.Alley;
+import com.epicodus.bowloregon.util.ScaleAndFadePageTransformer;
 
 import org.parceler.Parcels;
 
@@ -30,5 +31,6 @@ public class AlleyDetailActivity extends AppCompatActivity {
         adapterViewPager = new AlleyPagerAdapter(getSupportFragmentManager(), mAlleys);
         mViewPager.setAdapter(adapterViewPager);
         mViewPager.setCurrentItem(startingPosition);
+        mViewPager.setPageTransformer(true, new ScaleAndFadePageTransformer());
     }
 }
