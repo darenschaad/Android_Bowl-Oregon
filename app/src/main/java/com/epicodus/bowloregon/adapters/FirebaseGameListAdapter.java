@@ -1,5 +1,6 @@
 package com.epicodus.bowloregon.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class FirebaseGameListAdapter extends FirebaseRecyclerAdapter<GameViewHol
 
     @Override
     public void onBindViewHolder(GameViewHolder holder, int position) {
+        Log.d("ADAPTER", getItem(position).getAlleyName() + " null?");
         holder.bindGame(getItem(position));
     }
 

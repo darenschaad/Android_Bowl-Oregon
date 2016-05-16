@@ -82,8 +82,10 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid);
         Game newGame = new Game(score, date, alleyName);
-        newGame.setPushId(userUid);
-        gameLocation.setValue(newGame);
+        Firebase gameRef = gameLocation.push();
+        String pushId = gameRef.getKey();
+        newGame.setPushId(pushId);
+        gameRef.setValue(newGame);
     }
 
     @Override

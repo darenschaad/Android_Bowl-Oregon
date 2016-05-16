@@ -50,7 +50,7 @@ public class StatsActivity extends AppCompatActivity {
     private void setUpFirebaseQuery() {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
 //        String location = mFirebaseGamesRef.child(userUid).toString();
-        String location = mFirebaseGamesRef.toString();
+        String location = mFirebaseGamesRef.child(userUid).toString();
         Log.d("location", location);
         mQuery = new Firebase(location);
     }

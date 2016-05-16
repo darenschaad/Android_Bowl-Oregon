@@ -59,4 +59,5 @@ dependencies {
     compile 'org.parceler:parceler-api:1.1.1'
     compile 'com.firebase:firebase-client-android:2.3.1'
     apt 'org.parceler:parceler:1.1.1'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

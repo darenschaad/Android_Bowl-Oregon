@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
@@ -28,10 +29,12 @@ import android.widget.TextView;
 import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.models.User;
+import com.epicodus.bowloregon.util.FlingListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -83,6 +86,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonStats.setOnClickListener(this);
 //        mButtonAlleys.setOnClickListener(this);
         mButtonYelp.setOnClickListener(this);
+
+        final GestureDetector detector = new GestureDetector(this, new FlingListener(mBallImageView, this));
+        mBallImageView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (detector.onTouchEvent(motionEvent)) {
+                    Log.d("roll", "ball should now roll");
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+
+       Picasso.with(this)
+               .load(R.drawable.ball)
+               .into(mBallImageView);
 
         mUserRefListener = mUserRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -204,19 +225,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
-//    class BallImageViewGestureListener extends GestureDetector.SimpleOnGestureListener {
-//        @Override
-//        public boolean onFling(MotionEvent event1, MotionEvent event2,
-//                               float velocityX, float velocityY) {
-////            Animation flingAnimation = AnimationUtils.loadAnimation(mContext, R.anim.boomerang_fling_animation);
-//            mBallImageView.startAnimation(flingAnimation);
-////            mImageView.animate().scaleX(0.0f).scaleY(0.0f).setDuration(500);
-////            mImageView.animate().scaleX(1f).scaleY(1f).setDuration(500);
-//
-//            Log.d(DEBUG_TAG, "onFling: " + event1.toString()+event2.toString());
-//            return true;
-//        }
-//    }
 
 }

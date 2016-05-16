@@ -41,6 +41,7 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bindGame(Game game) {
+        Log.d("game alley name", game.getAlleyName() + " null?");
         String scoreString = new Double(game.getScore()).toString();
         mScoreTextView.setText(scoreString);
         mAlleyTextView.setText(game.getAlleyName());

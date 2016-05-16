@@ -24,11 +24,12 @@ public class Game {
     public double getScore() {
         return score;
     }
+
     public String getAlleyName() {
         return alleyName;
     }
 
-    public void setAlleyName(String pushId) {
+    public void setAlleyName(String alleyName) {
         this.alleyName = alleyName;
     }
 
