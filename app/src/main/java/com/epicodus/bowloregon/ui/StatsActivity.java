@@ -10,13 +10,17 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.adapters.FirebaseGameListAdapter;
 import com.epicodus.bowloregon.models.Game;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -27,9 +31,12 @@ import butterknife.ButterKnife;
 public class StatsActivity extends AppCompatActivity {
     private Query mQuery;
     private Firebase mFirebaseGamesRef;
+    private ValueEventListener mGameRefListener;
+    private String mUId;
     private FirebaseGameListAdapter mAdapter;
     private SharedPreferences mSharedPreferences;
     @Bind(R.id.recyclerView) RecyclerView mRecylerView;
+    @Bind(R.id.averageTextView) TextView mAverageTextView;
 
 
     @Override
@@ -39,17 +46,47 @@ public class StatsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
+        mUId = mSharedPreferences.getString(Constants.KEY_UID, null);
         mFirebaseGamesRef = new Firebase(Constants.FIREBASE_URL_GAMES);
 
         setUpFirebaseQuery();
         setUpRecyclerView();
 
+        Firebase firebaseUserGamesRef = mFirebaseGamesRef.child(mUId);
+
+        final Query returnAllChildNodes = new Firebase(Constants.FIREBASE_URL_GAMES).child(mUId);
+
+        returnAllChildNodes.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                double numberOfGamesPlayed = dataSnapshot.getChildrenCount();
+
+                Iterable<DataSnapshot> gamesPlayed = dataSnapshot.getChildren();
+
+
+                double total = 0;
+
+                for (DataSnapshot data : gamesPlayed) {
+                    Game game = data.getValue(Game.class);
+                    double totalPins = game.getScore();
+
+                    total += totalPins;
+                }
+
+                double averagePins = total/numberOfGamesPlayed;
+
+                mAverageTextView.setText("Current Average: " + averagePins + "");
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     private void setUpFirebaseQuery() {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-//        String location = mFirebaseGamesRef.child(userUid).toString();
         String location = mFirebaseGamesRef.child(userUid).toString();
         Log.d("location", location);
         mQuery = new Firebase(location);
