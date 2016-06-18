@@ -8,8 +8,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.epicodus.bowloregon.Constants;
@@ -37,40 +40,53 @@ public class StatsActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
     @Bind(R.id.recyclerView) RecyclerView mRecylerView;
     @Bind(R.id.averageTextView) TextView mAverageTextView;
+    @Bind(R.id.averageAlleySpinner) Spinner mAverageAlleySpinner;
 
+
+    private Firebase mFirebaseUserAlleysRef;
+    private ArrayList<String> mUserAlleys = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Stats", "reached");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         ButterKnife.bind(this);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         mUId = mSharedPreferences.getString(Constants.KEY_UID, null);
         mFirebaseGamesRef = new Firebase(Constants.FIREBASE_URL_GAMES);
+        mFirebaseUserAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
+        populateAlleySpinner();
 
-        setUpFirebaseQuery();
-        setUpRecyclerView();
+
 
         Firebase firebaseUserGamesRef = mFirebaseGamesRef.child(mUId);
 
         final Query returnAllChildNodes = new Firebase(Constants.FIREBASE_URL_GAMES).child(mUId);
 
+
+
         returnAllChildNodes.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                double numberOfGamesPlayed = dataSnapshot.getChildrenCount();
+                double numberOfGamesPlayed = 0;
 
-                Iterable<DataSnapshot> gamesPlayed = dataSnapshot.getChildren();
+                Iterable<DataSnapshot> alleysPlayedAt = dataSnapshot.getChildren();
 
 
                 double total = 0;
 
-                for (DataSnapshot data : gamesPlayed) {
-                    Game game = data.getValue(Game.class);
-                    double totalPins = game.getScore();
+                for (DataSnapshot data : alleysPlayedAt) {
+                    Iterable<DataSnapshot> gamesPlayed = data.getChildren();
+                    for (DataSnapshot gameData : gamesPlayed) {
+                        Game game = gameData.getValue(Game.class);
+                        double totalPins = game.getScore();
 
-                    total += totalPins;
+                        total += totalPins;
+                        numberOfGamesPlayed ++;
+                    }
                 }
 
                 double averagePins = total/numberOfGamesPlayed;
@@ -83,17 +99,53 @@ public class StatsActivity extends AppCompatActivity {
 
             }
         });
+
+        mAverageAlleySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                setUpFirebaseQuery();
+                setUpRecyclerView();
+                Log.d("spinner selected", "yay");
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+    }
+    private void populateAlleySpinner() {
+        Log.d("nested forloop", "");
+        mFirebaseUserAlleysRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                mUserAlleys.clear();
+                for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
+                    mUserAlleys.add(alleySnapshot.getValue().toString());
+                }
+                ArrayAdapter adapter = new ArrayAdapter(StatsActivity.this, android.R.layout.simple_spinner_item, mUserAlleys);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                mAverageAlleySpinner.setAdapter(adapter);
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     private void setUpFirebaseQuery() {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-        String location = mFirebaseGamesRef.child(userUid).toString();
+        String location = mFirebaseGamesRef.child(userUid).child(mAverageAlleySpinner.getSelectedItem().toString().replaceAll("\\s", "")).toString();
         Log.d("location", location);
         mQuery = new Firebase(location);
+        Log.d("query", mQuery.toString());
     }
 
     private void setUpRecyclerView() {
+        Log.d("nested forloop", "t");
         mAdapter = new FirebaseGameListAdapter(mQuery, Game.class);
+//        Log.d("adapter", mAdapter.getItem(0)+"");
         mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         mRecylerView.setAdapter(mAdapter);
     }

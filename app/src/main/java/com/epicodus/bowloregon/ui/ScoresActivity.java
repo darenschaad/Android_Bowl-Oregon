@@ -100,7 +100,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
 
     private void createGameInFirebaseHelper(final double score, final String date, final String alleyName) {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-        final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid);
+        final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid).child(alleyName.replaceAll("\\s", ""));
         Game newGame = new Game(score, date, alleyName);
         Firebase gameRef = gameLocation.push();
         String pushId = gameRef.getKey();
