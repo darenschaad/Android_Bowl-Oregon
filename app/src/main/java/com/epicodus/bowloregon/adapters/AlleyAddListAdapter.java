@@ -2,6 +2,8 @@ package com.epicodus.bowloregon.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,9 +16,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.models.Alley;
+import com.epicodus.bowloregon.ui.AlleyAddActivity;
 import com.epicodus.bowloregon.util.ItemTouchHelperViewHolder;
+import com.firebase.client.Firebase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -32,6 +37,8 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
     private static final int MAX_HEIGHT = 200;
     private ArrayList<Alley> mAlleys = new ArrayList<>();
     private Context mContext;
+    private Firebase mFirebaseScoreAlleysRef;
+    private SharedPreferences mSharedPreferences;
 
     public AlleyAddListAdapter(Context context, ArrayList<Alley> alleys) {
         mContext = context;
@@ -82,16 +89,19 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
             super(itemView);
             ButterKnife.bind(this, itemView);
             mContext = itemView.getContext();
+            mFirebaseScoreAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS);
+            mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
             itemView.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
-                    openDialog();
+                    int itemPosition = getLayoutPosition();
+                    openDialog(mAlleys.get(itemPosition));
                 }
             });
         }
 
-        private void openDialog(Alley alley) {
+        private void openDialog(final Alley alley) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setTitle("Add Alley To Track Scores at This Alley?");
             builder.setMessage("Add Alley To Track Scores at This Alley?");
@@ -105,9 +115,9 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
 
-                    saveAlleyToFirebase(alley.getName());
+                    saveAlleyToFirebase(alley);
 
-                    Toast.makeText(getApplicationContext(), "You can now save scores to this bowling alley!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "You can now save scores to this bowling alley!", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -115,7 +125,7 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
             builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(GroceryActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Cancel", Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -132,6 +142,13 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
                     .centerCrop()
                     .into(mAlleyImageView);
             mNameTextView.setText(alley.getName());
+        }
+
+        public void saveAlleyToFirebase(Alley alley) {
+            String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+            final Firebase userAlleyLocation = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
+            userAlleyLocation.push().setValue(alley.getName());
+
         }
     }
 }
