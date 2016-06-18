@@ -1,21 +1,23 @@
 package com.epicodus.bowloregon.adapters;
 
 import android.content.Context;
-import android.content.Intent;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.models.Alley;
-import com.epicodus.bowloregon.ui.AlleyDetailActivity;
 import com.epicodus.bowloregon.util.ItemTouchHelperViewHolder;
 import com.squareup.picasso.Picasso;
-
-import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -84,14 +86,42 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
 
                 @Override
                 public void onClick(View v) {
-                    int itemPosition = getLayoutPosition();
-                    Intent intent = new Intent(mContext, AlleyDetailActivity.class);
-                    intent.putExtra("position", itemPosition + "");
-                    intent.putExtra("alleys", Parcels.wrap(mAlleys));
-                    mContext.startActivity(intent);
+                    openDialog();
                 }
             });
         }
+
+        private void openDialog(Alley alley) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle("Add Alley To Track Scores at This Alley?");
+            builder.setMessage("Add Alley To Track Scores at This Alley?");
+//            builder.setView(subView);
+            AlertDialog alertDialog = builder.create();
+
+
+
+            builder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    saveAlleyToFirebase(alley.getName());
+
+                    Toast.makeText(getApplicationContext(), "You can now save scores to this bowling alley!", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Toast.makeText(GroceryActivity.this, "Cancel", Toast.LENGTH_LONG).show();
+                }
+            });
+
+            builder.show();
+        }
+
 
 
 
