@@ -216,8 +216,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.buttonYelp:
                 String location = mLocationEditText.getText().toString();
                 if (!(location.equals(""))) {
-                mSharedPreferencesEditor.putString(Constants.PREFERENCES_LOCATION_KEY, location).apply();
-            }
+                    mSharedPreferencesEditor.putString(Constants.PREFERENCES_LOCATION_KEY, location).apply();
+                }
                 Intent intent3 = new Intent(MainActivity.this, YelpActivity.class);
                 intent3.putExtra("location", location);
                 startActivity(intent3);

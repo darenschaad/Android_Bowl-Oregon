@@ -105,10 +105,10 @@
         android:hint="Enter Location or Zip Code" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/ballImageView"
-        android:layout_below="@+id/buttonYelp"
+        android:layout_below="@+id/editTextLocation"
         android:layout_toRightOf="@+id/buttonYelp"
         android:layout_toEndOf="@+id/buttonYelp" />
 

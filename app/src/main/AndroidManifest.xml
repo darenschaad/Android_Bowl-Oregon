@@ -6,11 +6,11 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:name=".MyAlleysApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:name=".MyAlleysApplication"
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.gms.version"
@@ -22,11 +22,14 @@
         <activity
             android:name=".ui.MainActivity"
             android:theme="@style/NoActionBarTheme">
-            <!--android:theme="@style/NoActionBarTheme">-->
-            <intent-filter>
+            <intent-filter android:label="@string/app_name">
                 <action android:name="android.intent.action.MAIN" />
 
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- android:theme="@style/NoActionBarTheme"> -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
         <activity android:name=".ui.StatsActivity">
@@ -40,23 +43,19 @@
                 android:value=".ui.MainActivity" />
         </activity>
         <activity android:name=".ui.MapsActivity" />
-        <activity android:name=".ui.YelpActivity" >
+        <activity android:name=".ui.YelpActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>
-        <activity android:name=".ui.AlleyDetailActivity" >
+        <activity android:name=".ui.AlleyDetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.MainActivity" />
         </activity>
         <activity android:name=".ui.CreateAccountActivity" />
-        <activity android:name=".ui.LoginActivity">
-            <intent-filter android:label="@string/app_name">
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.LoginActivity"></activity>
+        <activity android:name=".ui.AlleyAddActivity"></activity>
     </application>
 
 </manifest>

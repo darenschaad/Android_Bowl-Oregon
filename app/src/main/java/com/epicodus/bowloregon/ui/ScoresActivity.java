@@ -29,6 +29,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
     public static final String TAG = ScoresActivity.class.getSimpleName();
     @Bind(R.id.buttonEnterScores) Button mButtonEnterScores;
     @Bind(R.id.buttonViewStats) Button mButtonViewStats;
+    @Bind(R.id.addAlleyButton) Button mAddAlleyButton;
     @Bind(R.id.editTextScore) EditText mEditTextScore;
     @Bind(R.id.editTextDate) EditText mEditTextDate;
     @Bind(R.id.locationEditText) EditText mLocationEditText;
@@ -47,6 +48,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mButtonEnterScores.setOnClickListener(this);
         mButtonViewStats.setOnClickListener(this);
+        mAddAlleyButton.setOnClickListener(this);
         mFirebaseAlleysRef = new Firebase(Constants.FIREBASE_URL_ALLEYS);
         setUpFirebaseQuery();
 //        populateAlleySpinner();
@@ -109,6 +111,10 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.buttonViewStats:
                 Intent intent1 = new Intent(ScoresActivity.this, StatsActivity.class);
                 startActivity(intent1);
+                break;
+            case R.id.addAlleyButton:
+                Intent intent2 = new Intent(ScoresActivity.this, AlleyAddActivity.class);
+                startActivity(intent2);
                 break;
             default:
                 break;
