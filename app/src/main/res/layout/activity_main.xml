@@ -103,4 +103,13 @@
         android:layout_toRightOf="@+id/buttonYelp"
         android:layout_toEndOf="@+id/buttonYelp" />
 
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:id="@+id/pinImageView"
+        android:layout_below="@+id/editTextLocation"
+        android:layout_toLeftOf="@+id/buttonYelp"
+        android:layout_toStartOf="@+id/buttonYelp"
+        android:src="@drawable/bowling_pin"/>
+
 </RelativeLayout>
