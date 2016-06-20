@@ -57,16 +57,7 @@
         android:layout_alignLeft="@+id/tvTitle"
         android:layout_alignStart="@+id/tvTitle" />
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:id="@+id/imageView2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/imageView"
-        android:src="@drawable/bowlingdown" />
+
 
     <Button
         android:layout_width="wrap_content"
@@ -93,7 +84,7 @@
         android:layout_height="wrap_content"
         android:text="Search Alleys"
         android:id="@+id/buttonYelp"
-        android:layout_below="@+id/imageView2"
+        android:layout_below="@+id/imageView"
         android:layout_centerHorizontal="true" />
 
     <EditText
