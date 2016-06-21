@@ -17,12 +17,16 @@ import com.epicodus.bowloregon.R;
 public class FlingListener extends GestureDetector.SimpleOnGestureListener {
 
     private ImageView imageView;
+    private ImageView pinView;
     private Animation flingAnimation;
+
 
 
     public FlingListener(ImageView imageView, Context context) {
         this.imageView = imageView;
         flingAnimation = AnimationUtils.loadAnimation(context, R.anim.ball_animation);
+
+
     }
 
     private static final int SWIPE_MIN_DISTANCE = 120;

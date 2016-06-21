@@ -115,7 +115,6 @@ public class StatsActivity extends AppCompatActivity {
         });
     }
     private void populateAlleySpinner() {
-        Log.d("nested forloop", "");
         mFirebaseUserAlleysRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -137,13 +136,10 @@ public class StatsActivity extends AppCompatActivity {
     private void setUpFirebaseQuery() {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         String location = mFirebaseGamesRef.child(userUid).child(mAverageAlleySpinner.getSelectedItem().toString().replaceAll("\\s", "")).toString();
-        Log.d("location", location);
         mQuery = new Firebase(location);
-        Log.d("query", mQuery.toString());
     }
 
     private void setUpRecyclerView() {
-        Log.d("nested forloop", "t");
         mAdapter = new FirebaseGameListAdapter(mQuery, Game.class);
 //        Log.d("adapter", mAdapter.getItem(0)+"");
         mRecylerView.setLayoutManager(new LinearLayoutManager(this));
