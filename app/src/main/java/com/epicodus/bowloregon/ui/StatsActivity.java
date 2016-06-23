@@ -43,13 +43,11 @@ public class StatsActivity extends AppCompatActivity {
     @Bind(R.id.averageAlleySpinner) Spinner mAverageAlleySpinner;
     @Bind(R.id.averageByAlleyTextView) TextView mAverageByAlleyTextView;
 
-
     private Firebase mFirebaseUserAlleysRef;
     private ArrayList<String> mUserAlleys = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Stats", "reached");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         ButterKnife.bind(this);
@@ -61,19 +59,13 @@ public class StatsActivity extends AppCompatActivity {
         mFirebaseUserAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
         populateAlleySpinner();
 
-        Firebase firebaseUserGamesRef = mFirebaseGamesRef.child(mUId);
-
         final Query returnAllChildNodes = new Firebase(Constants.FIREBASE_URL_GAMES).child(mUId);
-
         returnAllChildNodes.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 double numberOfGamesPlayed = 0;
-
-                Iterable<DataSnapshot> alleysPlayedAt = dataSnapshot.getChildren();
-
-
                 double total = 0;
+                Iterable<DataSnapshot> alleysPlayedAt = dataSnapshot.getChildren();
 
                 for (DataSnapshot data : alleysPlayedAt) {
                     Iterable<DataSnapshot> gamesPlayed = data.getChildren();
@@ -87,7 +79,6 @@ public class StatsActivity extends AppCompatActivity {
                 }
 
                 double averagePins = round(total/numberOfGamesPlayed, 2);
-
                 mAverageTextView.setText("Current Total Average: " + averagePins + "");
             }
 
@@ -102,7 +93,6 @@ public class StatsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 setUpFirebaseQuery();
                 setUpRecyclerView();
-                Log.d("spinner selected", "yay");
             }
 
             @Override
@@ -131,7 +121,6 @@ public class StatsActivity extends AppCompatActivity {
     }
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
-
         long factor = (long) Math.pow(10, places);
         value = value * factor;
         long tmp = Math.round(value);
@@ -167,14 +156,12 @@ public class StatsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
     }
 
     private void setUpRecyclerView() {
         mAdapter = new FirebaseGameListAdapter(mQuery, Game.class);
-//        Log.d("adapter", mAdapter.getItem(0)+"");
         mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         mRecylerView.setAdapter(mAdapter);
     }

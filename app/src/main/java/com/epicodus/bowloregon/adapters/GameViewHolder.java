@@ -32,13 +32,6 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
         mContext = itemView.getContext();
         mGames = games;
-//        itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int itemPosition = getLayoutPosition();
-//                Intent
-//            }
-//        });
     }
 
     public void bindGame(Game game) {
@@ -47,7 +40,6 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
         mScoreTextView.setText(scoreString);
         mAlleyTextView.setText(game.getAlleyName());
         SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM d, yyyy");
-
         mDateTextView.setText(formatter.format(game.getDate()).toString());
 
 
