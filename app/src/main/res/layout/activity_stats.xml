@@ -39,7 +39,8 @@
         android:layout_below="@+id/averageTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp" />
+        android:layout_marginTop="30dp"
+        android:textSize="18sp" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -47,7 +48,8 @@
         android:id="@+id/averageAlleySpinner"
         android:layout_below="@+id/alleyAverageTextView"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textSize="18sp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -56,15 +58,8 @@
         android:id="@+id/averageByAlleyTextView"
         android:layout_below="@+id/averageAlleySpinner"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textSize="18sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Average"
-        android:id="@+id/laneAverageTextView"
-        android:layout_below="@+id/averageAlleySpinner"
-        android:layout_toRightOf="@+id/averageByAlleyTextView"
-        android:layout_toEndOf="@+id/averageByAlleyTextView" />
+
 </RelativeLayout>

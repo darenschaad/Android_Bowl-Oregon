@@ -86,9 +86,9 @@ public class StatsActivity extends AppCompatActivity {
                     }
                 }
 
-                double averagePins = total/numberOfGamesPlayed;
+                double averagePins = round(total/numberOfGamesPlayed, 2);
 
-                mAverageTextView.setText("Current Average: " + averagePins + "");
+                mAverageTextView.setText("Current Total Average: " + averagePins + "");
             }
 
             @Override
@@ -129,6 +129,14 @@ public class StatsActivity extends AppCompatActivity {
             }
         });
     }
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 
     private void setUpFirebaseQuery() {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
@@ -152,9 +160,9 @@ public class StatsActivity extends AppCompatActivity {
                     numberOfGamesPlayed ++;
                 }
 
-                double averagePins = total/numberOfGamesPlayed;
+                double averagePins = round(total/numberOfGamesPlayed, 2);
 
-                mAverageByAlleyTextView.setText("Current Average: " + averagePins + "");
+                mAverageByAlleyTextView.setText("Current Average at " + mAverageAlleySpinner.getSelectedItem().toString() + ": " + averagePins);
             }
 
             @Override
