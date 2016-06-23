@@ -84,7 +84,6 @@ public class StatsActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
 
@@ -115,7 +114,6 @@ public class StatsActivity extends AppCompatActivity {
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
     }
@@ -161,7 +159,7 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     private void setUpRecyclerView() {
-        mAdapter = new FirebaseGameListAdapter(mQuery, Game.class);
+        mAdapter = new FirebaseGameListAdapter(mQuery.orderByChild("date"), Game.class);
         mRecylerView.setLayoutManager(new LinearLayoutManager(this));
         mRecylerView.setAdapter(mAdapter);
     }
