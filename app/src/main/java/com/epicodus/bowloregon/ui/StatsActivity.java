@@ -41,6 +41,7 @@ public class StatsActivity extends AppCompatActivity {
     @Bind(R.id.recyclerView) RecyclerView mRecylerView;
     @Bind(R.id.averageTextView) TextView mAverageTextView;
     @Bind(R.id.averageAlleySpinner) Spinner mAverageAlleySpinner;
+    @Bind(R.id.averageByAlleyTextView) TextView mAverageByAlleyTextView;
 
 
     private Firebase mFirebaseUserAlleysRef;
@@ -60,13 +61,9 @@ public class StatsActivity extends AppCompatActivity {
         mFirebaseUserAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
         populateAlleySpinner();
 
-
-
         Firebase firebaseUserGamesRef = mFirebaseGamesRef.child(mUId);
 
         final Query returnAllChildNodes = new Firebase(Constants.FIREBASE_URL_GAMES).child(mUId);
-
-
 
         returnAllChildNodes.addValueEventListener(new ValueEventListener() {
             @Override
@@ -137,6 +134,34 @@ public class StatsActivity extends AppCompatActivity {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         String location = mFirebaseGamesRef.child(userUid).child(mAverageAlleySpinner.getSelectedItem().toString().replaceAll("\\s", "")).toString();
         mQuery = new Firebase(location);
+        mQuery.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                double numberOfGamesPlayed = 0;
+
+                Iterable<DataSnapshot> gamesPlayed = dataSnapshot.getChildren();
+
+
+                double total = 0;
+
+                for (DataSnapshot data : gamesPlayed) {
+                    Game game = data.getValue(Game.class);
+                    double totalPins = game.getScore();
+
+                    total += totalPins;
+                    numberOfGamesPlayed ++;
+                }
+
+                double averagePins = total/numberOfGamesPlayed;
+
+                mAverageByAlleyTextView.setText("Current Average: " + averagePins + "");
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     private void setUpRecyclerView() {

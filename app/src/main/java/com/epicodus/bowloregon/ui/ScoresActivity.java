@@ -3,12 +3,14 @@ package com.epicodus.bowloregon.ui;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -24,20 +26,23 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ScoresActivity extends AppCompatActivity implements View.OnClickListener {
+public class ScoresActivity extends AppCompatActivity implements View.OnClickListener, DatePickerFragment.DatePickDialogListener {
     public static final String TAG = ScoresActivity.class.getSimpleName();
     @Bind(R.id.buttonEnterScores) Button mButtonEnterScores;
     @Bind(R.id.buttonViewStats) Button mButtonViewStats;
     @Bind(R.id.addAlleyButton) Button mAddAlleyButton;
     @Bind(R.id.editTextScore) EditText mEditTextScore;
-    @Bind(R.id.editTextDate) EditText mEditTextDate;
-    @Bind(R.id.locationSpinner) Spinner mLocationSpinner;
 
+    @Bind(R.id.locationSpinner) Spinner mLocationSpinner;
+    int year_x, month_x, day_x;
     private SharedPreferences mSharedPreferences;
     private Query mQuery;
     private Firebase mFirebaseUserAlleysRef;
@@ -60,6 +65,12 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
 //        setUpFirebaseQuery();
 //        populateAlleySpinner();
 //        addItemsOnSpinner();
+    }
+
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = DatePickerFragment.newInstance(this);
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
 //    private void setUpFirebaseQuery() {
@@ -98,7 +109,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
         });
     }
 
-    private void createGameInFirebaseHelper(final double score, final String date, final String alleyName) {
+    private void createGameInFirebaseHelper(final double score, final Date date, final String alleyName) {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid).child(alleyName.replaceAll("\\s", ""));
         Game newGame = new Game(score, date, alleyName);
@@ -113,7 +124,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.buttonEnterScores:
                 double enteredScore = Double.parseDouble(mEditTextScore.getText().toString());
-                String enteredDate = mEditTextDate.getText().toString();
+                Date enteredDate = parseDate(year_x + "-" + month_x + "-" + day_x);;
                 String enteredLocation = mLocationSpinner.getSelectedItem().toString();
 
 //                Game game = new Game(enteredScore, enteredDate, enteredLocation);
@@ -138,5 +149,21 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
         }
+    }
+
+    public static Date parseDate(String date) {
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd").parse(date);
+        } catch (ParseException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void onFinishEditDialog(int year, int month, int day) {
+        year_x = year;
+        month_x = month;
+        day_x = day;
+        parseDate(year + "-" + month + "-" + day);
     }
 }

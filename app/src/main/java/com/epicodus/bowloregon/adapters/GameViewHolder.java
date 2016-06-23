@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.models.Game;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -45,7 +46,9 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
         String scoreString = new Double(game.getScore()).toString();
         mScoreTextView.setText(scoreString);
         mAlleyTextView.setText(game.getAlleyName());
-        mDateTextView.setText(game.getDate());
+        SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM d, yyyy");
+
+        mDateTextView.setText(formatter.format(game.getDate()).toString());
 
 
     }
