@@ -1,16 +1,16 @@
 package com.epicodus.bowloregon.util;
 
-        import android.support.annotation.Nullable;
-        import android.support.v7.widget.RecyclerView;
-        import android.util.Log;
-        import android.view.ViewGroup;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.ViewGroup;
 
-        import com.firebase.client.ChildEventListener;
-        import com.firebase.client.DataSnapshot;
-        import com.firebase.client.FirebaseError;
-        import com.firebase.client.Query;
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 
-        import java.util.ArrayList;
+import java.util.ArrayList;
 
 /**
  * Created by Matteo on 24/08/2015.

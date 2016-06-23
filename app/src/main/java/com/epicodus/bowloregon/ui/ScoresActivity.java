@@ -2,15 +2,13 @@ package com.epicodus.bowloregon.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.adapters.FirebaseAlleyArrayAdapter;
-import com.epicodus.bowloregon.models.Alley;
 import com.epicodus.bowloregon.models.Game;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -62,9 +59,6 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         mFirebaseUserAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
         populateAlleySpinner();
-//        setUpFirebaseQuery();
-//        populateAlleySpinner();
-//        addItemsOnSpinner();
     }
 
 
@@ -73,27 +67,11 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-//    private void setUpFirebaseQuery() {
-//        String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-//        String location = mFirebaseAlleysRef.child(userUid).toString();
-//        mQuery = new Firebase(location);
-//    }
-
-//    public void addItemsOnSpinner() {
-////        mAdapter = new FirebaseAlleyArrayAdapter(mQuery, Alley.class);
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.alleys_array, android.R.layout.simple_spinner_item);
-//        // Specify the layout to use when the list of choices appears
-//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        // Apply the adapter to the spinner
-//        mLocationSpinner.setAdapter(adapter);
-
-//    }
 
     private void populateAlleySpinner() {
         mFirebaseUserAlleysRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("it", "works");
                 mUserAlleys.clear();
                 for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
                     mUserAlleys.add(alleySnapshot.getValue().toString());
@@ -126,16 +104,9 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
                 double enteredScore = Double.parseDouble(mEditTextScore.getText().toString());
                 Date enteredDate = parseDate(year_x + "-" + month_x + "-" + day_x);;
                 String enteredLocation = mLocationSpinner.getSelectedItem().toString();
-
-//                Game game = new Game(enteredScore, enteredDate, enteredLocation);
-//                Firebase userGamesFirebaseRef = new Firebase(Constants.FIREBASE_URL_ALLEYS).child(userUid);
-//                Firebase pushRef = userGamesFirebaseRef.push();
-//                String alleyPushId = pushRef.getKey();
-//                pushRef.setValue(game);
                 createGameInFirebaseHelper(enteredScore, enteredDate, enteredLocation);
                 Toast.makeText(this, "Game Saved!", Toast.LENGTH_SHORT).show();
                 mEditTextScore.setText("");
-
                 break;
             case R.id.buttonViewStats:
                 Intent intent1 = new Intent(ScoresActivity.this, StatsActivity.class);

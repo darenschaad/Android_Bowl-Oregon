@@ -3,10 +3,9 @@ package com.epicodus.bowloregon.ui;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -101,9 +100,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
                         mAuthProgressDialog.hide();
                         if (authData != null) {
                             String userUid = authData.getUid();
-
                             String userInfo = authData.toString();
-                            Log.d(TAG, "Currently logged in: " + userInfo);
 
                             mSharedPreferencesEditor.putString(Constants.KEY_UID, userUid).apply();
                             Intent intent = new Intent(CreateAccountActivity.this, MainActivity.class);
@@ -137,7 +134,6 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
             @Override
             public void onError(FirebaseError firebaseError){
                 mAuthProgressDialog.hide();
-                Log.d(TAG, "error occurred " + firebaseError);
             }
         });
     }

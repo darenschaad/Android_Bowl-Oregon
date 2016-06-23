@@ -5,9 +5,4 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="alley_prompt">Choose an Alley</string>
 
-    <string-array name="alleys_array">
-        <item>AMFPro300</item>
-        <item>Interstate Lanes</item>
-    </string-array>
-
 </resources>

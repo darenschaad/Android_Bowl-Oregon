@@ -1,7 +1,6 @@
 package com.epicodus.bowloregon.util;
 
 import android.content.Context;
-import android.media.Image;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;

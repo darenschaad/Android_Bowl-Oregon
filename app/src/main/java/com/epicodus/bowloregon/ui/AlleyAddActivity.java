@@ -1,7 +1,7 @@
 package com.epicodus.bowloregon.ui;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -28,7 +28,6 @@ public class AlleyAddActivity extends AppCompatActivity implements View.OnClickL
         @Bind(R.id.searchEditText) EditText mSearchEditText;
         private AlleyAddListAdapter mAdapter;
 
-
         public ArrayList<Alley> mAlleys = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +35,6 @@ public class AlleyAddActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_alley_add);
         ButterKnife.bind(this);
         mSearchButton.setOnClickListener(this);
-
-
-
     }
 
     private void getAlleys(String location) {

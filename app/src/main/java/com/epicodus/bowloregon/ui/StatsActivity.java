@@ -1,17 +1,14 @@
 package com.epicodus.bowloregon.ui;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -25,7 +22,6 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import butterknife.Bind;
@@ -49,7 +45,6 @@ public class StatsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("Stats", "reached");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
         ButterKnife.bind(this);
@@ -69,10 +64,7 @@ public class StatsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 double numberOfGamesPlayed = 0;
-
                 Iterable<DataSnapshot> alleysPlayedAt = dataSnapshot.getChildren();
-
-
                 double total = 0;
 
                 for (DataSnapshot data : alleysPlayedAt) {
@@ -80,14 +72,12 @@ public class StatsActivity extends AppCompatActivity {
                     for (DataSnapshot gameData : gamesPlayed) {
                         Game game = gameData.getValue(Game.class);
                         double totalPins = game.getScore();
-
                         total += totalPins;
                         numberOfGamesPlayed ++;
                     }
                 }
 
                 double averagePins = round(total/numberOfGamesPlayed, 2);
-
                 mAverageTextView.setText("Current Total Average: " + averagePins + "");
             }
 
@@ -102,7 +92,6 @@ public class StatsActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 setUpFirebaseQuery();
                 setUpRecyclerView();
-                Log.d("spinner selected", "yay");
             }
 
             @Override
@@ -131,7 +120,6 @@ public class StatsActivity extends AppCompatActivity {
     }
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
-
         long factor = (long) Math.pow(10, places);
         value = value * factor;
         long tmp = Math.round(value);
@@ -146,23 +134,16 @@ public class StatsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 double numberOfGamesPlayed = 0;
-
                 Iterable<DataSnapshot> gamesPlayed = dataSnapshot.getChildren();
-
-
                 double total = 0;
-
                 for (DataSnapshot data : gamesPlayed) {
                     Game game = data.getValue(Game.class);
                     double totalPins = game.getScore();
-
                     total += totalPins;
                     numberOfGamesPlayed ++;
                 }
-
                 double averagePins = round(total/numberOfGamesPlayed, 2);
-
-                mAverageByAlleyTextView.setText("Current Average at " + mAverageAlleySpinner.getSelectedItem().toString() + ": " + averagePins);
+                mAverageByAlleyTextView.setText("Average at " + mAverageAlleySpinner.getSelectedItem().toString() + ": " + averagePins);
             }
 
             @Override

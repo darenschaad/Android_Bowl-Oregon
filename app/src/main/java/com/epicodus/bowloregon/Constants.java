@@ -1,7 +1,5 @@
 package com.epicodus.bowloregon;
 
-import android.os.Build;
-
 /**
  * Created by Guest on 4/29/16.
  */

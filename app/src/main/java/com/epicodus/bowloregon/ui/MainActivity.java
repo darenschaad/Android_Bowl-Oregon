@@ -3,24 +3,15 @@ package com.epicodus.bowloregon.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.preference.PreferenceManager;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
-import android.util.Log;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -40,19 +31,15 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-//    public class MainActivity extends AppCompatActivity implements View.OnClickListener, SensorEventListener {
     public static final String TAG = MainActivity.class.getSimpleName();
     @Bind(R.id.buttonScores) Button mButtonScores;
     @Bind(R.id.buttonStats) Button mButtonStats;
-//    @Bind(R.id.buttonAlleys) Button mButtonAlleys;
     @Bind(R.id.buttonYelp) Button mButtonYelp;
     @Bind(R.id.editTextLocation) EditText mLocationEditText;
     @Bind(R.id.welcomeTextView) TextView mWelcomeTextView;
     @Bind(R.id.ballImageView) ImageView mBallImageView;
     @Bind(R.id.pinImageView) ImageView mPinImageView;
-//    @Bind(R.id.editTextBowlLocation) EditText mEditTextBowlLocation;
 
-//    private GestureDetectorCompat mBallImageViewDetector;
     private ValueEventListener mUserRefListener;
     private Firebase mFirebaseRef;
     private Firebase mUserRef;
@@ -60,13 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mSharedPreferencesEditor;
     Context mContext;
-//    private SensorManager mSensorManager;
-//    private Sensor mSensor;
-//    private long lastUpdate = 0;
-//    private float last_x, last_y, last_z;
-//    private static final int SHAKE_THRESHOLD = 1000;
-//    private static final String DEBUG_TAG = "Gestures";
-//    public Animation pinFallAnimation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +55,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        pinFallAnimation = AnimationUtils.loadAnimation(mContext, R.anim.pin_animation);
-//        flingAnimation = AnimationUtils.loadAnimation(mContext, R.anim.ball_animation);
-//        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-//        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//        mSensorManager.registerListener(this, mSensor, mSensorManager.SENSOR_DELAY_NORMAL);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mSharedPreferencesEditor = mSharedPreferences.edit();
         mUid = mSharedPreferences.getString(Constants.KEY_UID, null);
@@ -86,7 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
         mButtonScores.setOnClickListener(this);
         mButtonStats.setOnClickListener(this);
-//        mButtonAlleys.setOnClickListener(this);
         mButtonYelp.setOnClickListener(this);
 
         final GestureDetector detector = new GestureDetector(this, new FlingListener(mBallImageView, this));
@@ -94,15 +69,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (detector.onTouchEvent(motionEvent)) {
-                    Log.d("roll", "ball should now roll");
-//                    mPinImageView.startAnimation(pinFallAnimation);
                     return true;
                 }
                 return false;
             }
         });
-
-
 
        Picasso.with(this)
                .load(R.drawable.ball)
@@ -117,56 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-
             }
         });
-//        mBallImageViewDetector = new GestureDetectorCompat(this, new BallImageViewGestureListener());
-//        mBallImageView.setOnTouchListener(new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event) {
-//                mBallImageViewDetector.onTouchEvent(event);
-//                return true;
-//            }
-//        });
     }
-
-//    @Override
-//    public void onSensorChanged(SensorEvent event) {
-//        Sensor sensor = event.sensor;
-//
-//        if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-//            float x = event.values[0];
-//            float y = event.values[1];
-//            float z = event.values[2];
-//
-//            long curTime = System.currentTimeMillis();
-//
-//            if ((curTime - lastUpdate) > 100 ) {
-//                long diffTime = (curTime - lastUpdate);
-//                lastUpdate = curTime;
-//
-//                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
-//
-//                if (speed > SHAKE_THRESHOLD) {
-//                    Log.d("SensorEventListener", "shaking");
-//
-//                    mBallImageView.startAnimation(flingAnimation);
-//
-//
-//
-//
-//                    last_x = x;
-//                    last_y = y;
-//                    last_z = z;
-//
-//                }
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-//
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -198,12 +122,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buttonStats:
-                Log.d("Stats", "clicked");
                 Intent intent = new Intent(MainActivity.this, StatsActivity.class);
                 startActivity(intent);
                 break;
@@ -211,12 +133,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent1 = new Intent(MainActivity.this, ScoresActivity.class);
                 startActivity(intent1);
                 break;
-//            case R.id.buttonAlleys:
-////                String location = mEditTextBowlLocation.getText().toString();
-//                Intent intent2 = new Intent(MainActivity.this, MapsActivity.class);
-////                intent2.putExtra("location", loc97232ation);
-//                startActivity(intent2);
-//                break;
             case R.id.buttonYelp:
                 String location = mLocationEditText.getText().toString();
                 if (!(location.equals(""))) {
@@ -225,9 +141,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent3 = new Intent(MainActivity.this, YelpActivity.class);
                 intent3.putExtra("location", location);
                 startActivity(intent3);
+                break;
             default:
                 break;
         }
     }
-
 }
