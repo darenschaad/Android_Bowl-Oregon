@@ -104,8 +104,12 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.buttonEnterScores:
                 String scoreString = mEditTextScore.getText().toString();
                 String dateString = mDateEditText.getText().toString();
-                int scoreint = Integer.parseInt(scoreString);
-                if (scoreString.equals("") || dateString.equals("Select Date") || scoreint > 300) {
+                Log.d("string", scoreString);
+                if (!scoreString.equals("")) {
+                    int scoreInt = Integer.parseInt(scoreString);
+                }
+//
+                if (scoreString.equals("") || dateString.equals("Select Date") ) {
                     Toast.makeText(this, "Game could not be saved, please enter a valid score and select a date", Toast.LENGTH_SHORT).show();
                 }else {
                     double enteredScore = Double.parseDouble(scoreString);
