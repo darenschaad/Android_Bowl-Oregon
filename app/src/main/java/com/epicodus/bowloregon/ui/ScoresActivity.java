@@ -107,21 +107,24 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
                 Log.d("string", scoreString);
                 if (!scoreString.equals("")) {
                     int scoreInt = Integer.parseInt(scoreString);
-                }
-//
-                if (scoreString.equals("") || dateString.equals("Select Date") ) {
-                    Toast.makeText(this, "Game could not be saved, please enter a valid score and select a date", Toast.LENGTH_SHORT).show();
+                    if (scoreString.equals("") || scoreInt > 300) {
+                        Toast.makeText(this, "Game could not be saved, please enter a valid score", Toast.LENGTH_SHORT).show();
+                    } if (dateString.equals("Select Date")){
+                        Toast.makeText(this, "Game could not be saved, please select a date", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        double enteredScore = Double.parseDouble(scoreString);
+                        Date enteredDate = parseDate(year_x + "-" + month_x + "-" + day_x);
+                        Log.d("Date", enteredDate + "");
+                        Log.d("Score", enteredScore + "");
+                        String enteredLocation = mLocationSpinner.getSelectedItem().toString();
+                        createGameInFirebaseHelper(enteredScore, enteredDate, enteredLocation);
+                        Toast.makeText(this, "Game Saved!", Toast.LENGTH_SHORT).show();
+                        mEditTextScore.setText("");
+                    }
                 }else {
-                    double enteredScore = Double.parseDouble(scoreString);
-                    Date enteredDate = parseDate(year_x + "-" + month_x + "-" + day_x);
-                    Log.d("Date", enteredDate + "");
-                    Log.d("Score", enteredScore + "");
-                    String enteredLocation = mLocationSpinner.getSelectedItem().toString();
-                    createGameInFirebaseHelper(enteredScore, enteredDate, enteredLocation);
-                    Toast.makeText(this, "Game Saved!", Toast.LENGTH_SHORT).show();
-                    mEditTextScore.setText("");
+                    Toast.makeText(this, "Game could not be saved, please enter a valid score", Toast.LENGTH_SHORT).show();
                 }
-
                 break;
             case R.id.buttonViewStats:
                 Intent intent1 = new Intent(ScoresActivity.this, StatsActivity.class);
@@ -133,7 +136,6 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             default:
                 break;
-
         }
     }
 
