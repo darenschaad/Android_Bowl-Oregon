@@ -112,6 +112,8 @@
         android:id="@+id/buttonEnterScores"
         android:layout_row="21"
         android:layout_column="1"
+        android:textColor="#ffffff"
+        android:background="@drawable/bluebutton"
         android:layout_below="@+id/gridLayout"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
