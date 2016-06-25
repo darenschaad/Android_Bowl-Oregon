@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
+//        inflater.inflate(R.menu.menu_search, menu);
         inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -211,12 +211,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent intent1 = new Intent(MainActivity.this, ScoresActivity.class);
                 startActivity(intent1);
                 break;
-//            case R.id.buttonAlleys:
-////                String location = mEditTextBowlLocation.getText().toString();
-//                Intent intent2 = new Intent(MainActivity.this, MapsActivity.class);
-////                intent2.putExtra("location", loc97232ation);
-//                startActivity(intent2);
-//                break;
             case R.id.buttonYelp:
                 String location = mLocationEditText.getText().toString();
                 if (!(location.equals(""))) {
