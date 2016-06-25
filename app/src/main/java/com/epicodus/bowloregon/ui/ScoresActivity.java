@@ -104,19 +104,19 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
             case R.id.buttonEnterScores:
                 String scoreString = mEditTextScore.getText().toString();
                 String dateString = mDateEditText.getText().toString();
-                Log.d("string", scoreString);
+
                 if (!scoreString.equals("")) {
                     int scoreInt = Integer.parseInt(scoreString);
                     if (scoreString.equals("") || scoreInt > 300) {
                         Toast.makeText(this, "Game could not be saved, please enter a valid score", Toast.LENGTH_SHORT).show();
                     } if (dateString.equals("Select Date")){
                         Toast.makeText(this, "Game could not be saved, please select a date", Toast.LENGTH_SHORT).show();
+                    } if (mLocationSpinner.getSelectedItem() == null) {
+                        Toast.makeText(this, "Game could not be saved, please select a bowling alley", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         double enteredScore = Double.parseDouble(scoreString);
                         Date enteredDate = parseDate(year_x + "-" + month_x + "-" + day_x);
-                        Log.d("Date", enteredDate + "");
-                        Log.d("Score", enteredScore + "");
                         String enteredLocation = mLocationSpinner.getSelectedItem().toString();
                         createGameInFirebaseHelper(enteredScore, enteredDate, enteredLocation);
                         Toast.makeText(this, "Game Saved!", Toast.LENGTH_SHORT).show();

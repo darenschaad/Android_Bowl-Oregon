@@ -72,13 +72,11 @@ public class StatsActivity extends AppCompatActivity {
                     for (DataSnapshot gameData : gamesPlayed) {
                         Game game = gameData.getValue(Game.class);
                         double totalPins = game.getScore();
-
                         total += totalPins;
                         numberOfGamesPlayed ++;
                     }
                 }
-
-                double averagePins = round(total/numberOfGamesPlayed, 2);
+                double averagePins = round(total/numberOfGamesPlayed, 3);
                 mAverageTextView.setText("Current Total Average: " + averagePins + "");
             }
 

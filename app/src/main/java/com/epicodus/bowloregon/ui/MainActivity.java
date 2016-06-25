@@ -28,11 +28,13 @@ import android.widget.TextView;
 
 import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.R;
+import com.epicodus.bowloregon.models.Game;
 import com.epicodus.bowloregon.models.User;
 import com.epicodus.bowloregon.util.FlingListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -50,9 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.welcomeTextView) TextView mWelcomeTextView;
     @Bind(R.id.ballImageView) ImageView mBallImageView;
     @Bind(R.id.pinImageView) ImageView mPinImageView;
-//    @Bind(R.id.editTextBowlLocation) EditText mEditTextBowlLocation;
+    @Bind(R.id.currentAverageTextView) TextView mCurrentAverageTextView;
 
-//    private GestureDetectorCompat mBallImageViewDetector;
     private ValueEventListener mUserRefListener;
     private Firebase mFirebaseRef;
     private Firebase mUserRef;
@@ -102,8 +103,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-
-
        Picasso.with(this)
                .load(R.drawable.ball)
                .into(mBallImageView);
@@ -120,53 +119,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-//        mBallImageViewDetector = new GestureDetectorCompat(this, new BallImageViewGestureListener());
-//        mBallImageView.setOnTouchListener(new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event) {
-//                mBallImageViewDetector.onTouchEvent(event);
-//                return true;
-//            }
-//        });
+
+        final Query returnAllChildNodes = new Firebase(Constants.FIREBASE_URL_GAMES).child(mUid);
+        returnAllChildNodes.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                double numberOfGamesPlayed = 0;
+                double total = 0;
+                Iterable<DataSnapshot> alleysPlayedAt = dataSnapshot.getChildren();
+
+                for (DataSnapshot data : alleysPlayedAt) {
+                    Iterable<DataSnapshot> gamesPlayed = data.getChildren();
+                    for (DataSnapshot gameData : gamesPlayed) {
+                        Game game = gameData.getValue(Game.class);
+                        double totalPins = game.getScore();
+                        total += totalPins;
+                        numberOfGamesPlayed ++;
+                    }
+                }
+                double averagePins = round(total/numberOfGamesPlayed, 2);
+                mCurrentAverageTextView.setText("Current Average: " + averagePins + "");
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
     }
 
-//    @Override
-//    public void onSensorChanged(SensorEvent event) {
-//        Sensor sensor = event.sensor;
-//
-//        if (sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-//            float x = event.values[0];
-//            float y = event.values[1];
-//            float z = event.values[2];
-//
-//            long curTime = System.currentTimeMillis();
-//
-//            if ((curTime - lastUpdate) > 100 ) {
-//                long diffTime = (curTime - lastUpdate);
-//                lastUpdate = curTime;
-//
-//                float speed = Math.abs(x + y + z - last_x - last_y - last_z) / diffTime * 10000;
-//
-//                if (speed > SHAKE_THRESHOLD) {
-//                    Log.d("SensorEventListener", "shaking");
-//
-//                    mBallImageView.startAnimation(flingAnimation);
-//
-//
-//
-//
-//                    last_x = x;
-//                    last_y = y;
-//                    last_z = z;
-//
-//                }
-//            }
-//        }
-//    }
-
-//    @Override
-//    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-//
-//    }
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

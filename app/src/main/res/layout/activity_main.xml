@@ -112,4 +112,13 @@
         android:layout_toStartOf="@+id/buttonYelp"
         android:src="@drawable/bowling_pin"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Current Average"
+        android:id="@+id/currentAverageTextView"
+        android:layout_above="@+id/buttonScores"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp" />
+
 </RelativeLayout>
