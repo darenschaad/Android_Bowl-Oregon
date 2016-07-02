@@ -72,13 +72,12 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
         mFirebaseUserAlleysRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("it", "works");
                 mUserAlleys.clear();
                 for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
                     mUserAlleys.add(alleySnapshot.getValue().toString());
                 }
-                ArrayAdapter adapter = new ArrayAdapter(ScoresActivity.this, android.R.layout.simple_spinner_item, mUserAlleys);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                ArrayAdapter adapter = new ArrayAdapter(ScoresActivity.this, R.layout.spinner_alley, mUserAlleys);
+                adapter.setDropDownViewResource(R.layout.spinner_alley);
                 mLocationSpinner.setAdapter(adapter);
             }
             @Override

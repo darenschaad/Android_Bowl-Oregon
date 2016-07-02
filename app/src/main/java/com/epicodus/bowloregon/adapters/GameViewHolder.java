@@ -95,9 +95,6 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
         String alleyName = game.getAlleyName();
         Firebase savedItemRef = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid).child(alleyName.replaceAll("\\s", ""));
         Firebase finalItem = savedItemRef.child(id);
-//        Log.d("Firebase URL", finalItem + "");
-//        Intent intent = new Intent(getActivity(), GroceryActivity.class);
-//        getActivity().startActivity(intent);
         finalItem.removeValue();
     }
 }
