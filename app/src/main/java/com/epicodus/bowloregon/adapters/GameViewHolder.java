@@ -56,8 +56,6 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
         mDeleteButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
-                Log.d("Click", "It Clicked");
                 openDeleteDialog(game);
             }
         });
@@ -73,7 +71,7 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteItemFromFirebase(game);
-                Toast.makeText(mContext.getApplicationContext(), "Deleted forEVER", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Deleted forEVER", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -81,7 +79,7 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(mContext.getApplicationContext(), "Phew! That was close!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, "Phew! That was close!", Toast.LENGTH_SHORT).show();
             }
         });
 

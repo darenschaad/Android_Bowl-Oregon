@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //    private float last_x, last_y, last_z;
 //    private static final int SHAKE_THRESHOLD = 1000;
 //    private static final String DEBUG_TAG = "Gestures";
-//    public Animation pinFallAnimation;
+    public Animation pinFallAnimation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-//        pinFallAnimation = AnimationUtils.loadAnimation(mContext, R.anim.pin_animation);
+        pinFallAnimation = AnimationUtils.loadAnimation(this, R.anim.pin_animation);
 //        flingAnimation = AnimationUtils.loadAnimation(mContext, R.anim.ball_animation);
 //        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 //        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 if (detector.onTouchEvent(motionEvent)) {
                     Log.d("roll", "ball should now roll");
-//                    mPinImageView.startAnimation(pinFallAnimation);
+                    mPinImageView.startAnimation(pinFallAnimation);
                     return true;
                 }
                 return false;
