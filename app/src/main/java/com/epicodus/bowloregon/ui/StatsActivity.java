@@ -94,7 +94,6 @@ public class StatsActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
     }
@@ -131,22 +130,16 @@ public class StatsActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 double numberOfGamesPlayed = 0;
-
                 Iterable<DataSnapshot> gamesPlayed = dataSnapshot.getChildren();
-
-
                 double total = 0;
 
                 for (DataSnapshot data : gamesPlayed) {
                     Game game = data.getValue(Game.class);
                     double totalPins = game.getScore();
-
                     total += totalPins;
                     numberOfGamesPlayed ++;
                 }
-
                 double averagePins = round(total/numberOfGamesPlayed, 2);
-
                 mAverageByAlleyTextView.setText("Current Average at " + mAverageAlleySpinner.getSelectedItem().toString() + ": " + averagePins);
             }
 

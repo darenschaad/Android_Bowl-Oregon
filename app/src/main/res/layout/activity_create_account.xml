@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Sign up"
-            android:background="@color/colorAccent"
+            android:background="@drawable/orangebutton"
             android:layout_marginTop="15dp"
             android:textColor="@color/colorTextIcons" />
 
@@ -91,7 +91,7 @@
             android:layout_marginTop="20dp"
             android:textColor="@color/colorTextIcons"
             android:textStyle="bold"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:text="Already have an account? Log in here!"
             android:id="@+id/loginTextView"
             android:layout_gravity="center_horizontal" />

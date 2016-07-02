@@ -6,7 +6,7 @@
 
 
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:background="#ffffff"
@@ -24,6 +24,8 @@
             android:text="Score"
             android:textColor="@color/colorPrimary"/>
 
+
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,6 +33,7 @@
             android:id="@+id/bowlingAlleyNameTextView"
             android:textStyle="italic"
             android:textSize="20sp"
+            android:layout_below="@+id/scoreTextView"
             android:textColor="@color/colorPrimary"/>
 
         <RelativeLayout
@@ -50,6 +53,16 @@
                 android:layout_alignParentEnd="true"
                 android:textSize="15sp"
                 android:paddingBottom="5dp" />
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"
+                android:id="@+id/deleteButton"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
         </RelativeLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>
