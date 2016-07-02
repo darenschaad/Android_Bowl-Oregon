@@ -16,7 +16,7 @@ public class Constants {
     public static final String YELP_TOKEN_SECRET = BuildConfig.YELP_TOKEN_SECRET;
     public static final String PREFERENCES_LOCATION_KEY = "location";
 
-    public static final String YELP_BASE_URL = "https://api.yelp.com/v2/search?term=bowling%20alley";
+    public static final String YELP_BASE_URL = "https://api.yelp.com/v2/search?category_filter=bowling&radius_filter=40000";
     public static final String YELP_LOCATION_QUERY_PARAMETER = "location";
 
     public static final String FIREBASE_URL = BuildConfig.FIREBASE_ROOT_URL;
