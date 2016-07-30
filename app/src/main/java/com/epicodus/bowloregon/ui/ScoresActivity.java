@@ -19,18 +19,25 @@ import android.widget.Toast;
 import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.adapters.FirebaseAlleyArrayAdapter;
+import com.epicodus.bowloregon.adapters.SpinnerAdapter;
 import com.epicodus.bowloregon.models.Alley;
 import com.epicodus.bowloregon.models.Game;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -46,7 +53,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
     int year_x, month_x, day_x;
     private SharedPreferences mSharedPreferences;
     private Firebase mFirebaseUserAlleysRef;
-    private ArrayList<String> mUserAlleys = new ArrayList<>();
+    private ArrayList<Alley> mUserAlleys = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +68,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         mFirebaseUserAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
         populateAlleySpinner();
+
     }
 
     public void showDatePickerDialog(View v) {
@@ -74,9 +82,17 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mUserAlleys.clear();
                 for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
-                    mUserAlleys.add(alleySnapshot.getValue().toString());
+                    Log.d("AlleySnapshot", alleySnapshot.getValue() + "");
+                    HashMap<String, Object> hashMap = (HashMap<String, Object>) alleySnapshot.getValue();
+                    Alley alley = new Alley(hashMap);
+                    Log.d("alleyObject", alley.toString());
+                    mUserAlleys.add(alley);
+
+//                    Alley alley = (Alley) alleySnapshot.getValue();
+//                    mUserAlleys.add(alleySnapshot.getValue().toString());
+//                    mUserAlleys.add(alley.getName() + " - " + alley.getCity());
                 }
-                ArrayAdapter adapter = new ArrayAdapter(ScoresActivity.this, R.layout.spinner_alley, mUserAlleys);
+                SpinnerAdapter adapter = new SpinnerAdapter(ScoresActivity.this, R.layout.spinner_alley, mUserAlleys);
                 adapter.setDropDownViewResource(R.layout.spinner_alley);
                 mLocationSpinner.setAdapter(adapter);
             }
@@ -86,6 +102,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
             }
         });
     }
+
 
     private void createGameInFirebaseHelper(final double score, final Date date, final String alleyName) {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);

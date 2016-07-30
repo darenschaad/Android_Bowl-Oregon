@@ -4,6 +4,7 @@ import org.parceler.Parcel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Guest on 4/29/16.
@@ -19,15 +20,29 @@ public class Alley {
     double latitude;
     double longitude;
     List<String> categories = new ArrayList<>();
+    String id;
+    String city;
     String pushId;
 
     public Alley() {}
 
+    public Alley(Map<String, Object> map){
+        name = (String) map.get("name");
+        phone = (String) map.get("phone");
+        website = (String) map.get("website");
+        rating = (double) map.get("rating");
+        address = (List<String>) map.get("address");
+        latitude = (double) map.get("latitude");
+        longitude = (double) map.get("longitude");
+        categories = (List<String>) map.get("categories");
+        id = (String) map.get("id");
+        city = (String) map.get("city");
 
+    }
 
     public Alley(String name, String phone, String website,
                  double rating, String imageUrl, ArrayList<String> address,
-                 double latitude, double longitude, ArrayList<String> categories) {
+                 double latitude, double longitude, ArrayList<String> categories, String id, String city) {
         this.name = name;
         this.phone = phone;
         this.website = website;
@@ -37,6 +52,8 @@ public class Alley {
         this.latitude = latitude;
         this.longitude = longitude;
         this.categories = categories;
+        this.id = id;
+        this.city = city;
     }
 
 
@@ -79,6 +96,10 @@ public class Alley {
     public List<String> getCategories() {
         return categories;
     }
+
+    public String getId() { return id; }
+
+    public String getCity() { return city; }
 
     public String getPushId() {
         return pushId;

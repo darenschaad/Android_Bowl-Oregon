@@ -38,6 +38,7 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
     private ArrayList<Alley> mAlleys = new ArrayList<>();
     private Context mContext;
     private Firebase mFirebaseScoreAlleysRef;
+    private Firebase mFirebaseUserAlleysRef;
     private SharedPreferences mSharedPreferences;
 
     public AlleyAddListAdapter(Context context, ArrayList<Alley> alleys) {
@@ -114,7 +115,13 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-
+//                    String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+//                    mFirebaseUserAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
+//                    for (:
+//                         ) {
+//
+//                    }
+//                    if ()
                     saveAlleyToFirebase(alley);
 
                     Toast.makeText(mContext, "You can now save scores to this bowling alley!", Toast.LENGTH_SHORT).show();
@@ -147,7 +154,7 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
         public void saveAlleyToFirebase(Alley alley) {
             String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
             final Firebase userAlleyLocation = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
-            userAlleyLocation.push().setValue(alley.getName());
+            userAlleyLocation.push().setValue(alley);
 
         }
     }
