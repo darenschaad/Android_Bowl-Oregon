@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,9 +37,6 @@ public class AlleyAddActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_alley_add);
         ButterKnife.bind(this);
         mSearchButton.setOnClickListener(this);
-
-
-
     }
 
     private void getAlleys(String location) {
@@ -52,7 +50,9 @@ public class AlleyAddActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onResponse(Call call, Response response) {
+
                 mAlleys = yelpService.processResults(response);
+                Log.d("alleys", mAlleys + "");
                 AlleyAddActivity.this.runOnUiThread(new Runnable(){
                     @Override
                     public void run() {

@@ -21,7 +21,6 @@ public class Alley {
     double longitude;
     List<String> categories = new ArrayList<>();
     String id;
-    String city;
     String pushId;
 
     public Alley() {}
@@ -36,13 +35,12 @@ public class Alley {
         longitude = (double) map.get("longitude");
         categories = (List<String>) map.get("categories");
         id = (String) map.get("id");
-        city = (String) map.get("city");
 
     }
 
     public Alley(String name, String phone, String website,
                  double rating, String imageUrl, ArrayList<String> address,
-                 double latitude, double longitude, ArrayList<String> categories, String id, String city) {
+                 double latitude, double longitude, ArrayList<String> categories, String id) {
         this.name = name;
         this.phone = phone;
         this.website = website;
@@ -53,7 +51,7 @@ public class Alley {
         this.longitude = longitude;
         this.categories = categories;
         this.id = id;
-        this.city = city;
+
     }
 
 
@@ -98,8 +96,6 @@ public class Alley {
     }
 
     public String getId() { return id; }
-
-    public String getCity() { return city; }
 
     public String getPushId() {
         return pushId;
