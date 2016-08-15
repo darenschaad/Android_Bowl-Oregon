@@ -155,9 +155,8 @@ public class StatsActivity extends AppCompatActivity {
 
     private void setUpFirebaseQuery() {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-        Log.d("userUid", userUid);
-//        Log.d("location", mFirebaseGamesRef.child(userUid).child(mAverageAlleySpinner.getSelectedItem().toString().replaceAll("\\s", "")).toString());
-        String location = mFirebaseGamesRef.child(userUid).child(mAverageAlleySpinner.getSelectedItem().toString().replaceAll("\\s", "")).toString();
+        Alley alley = (Alley) mAverageAlleySpinner.getSelectedItem();
+        String location = mFirebaseGamesRef.child(userUid).child(alley.getName().replaceAll("\\s", "")).toString();
 
         mQuery = new Firebase(location);
         mQuery.addValueEventListener(new ValueEventListener() {
@@ -174,7 +173,8 @@ public class StatsActivity extends AppCompatActivity {
                     numberOfGamesPlayed ++;
                 }
                 double averagePins = round(total/numberOfGamesPlayed, 2);
-                mAverageByAlleyTextView.setText("Current Average at " + mAverageAlleySpinner.getSelectedItem().toString() + ": " + averagePins);
+                Alley alley = (Alley) mAverageAlleySpinner.getSelectedItem();
+                mAverageByAlleyTextView.setText("Current Average at " + alley.getName() + ": " + averagePins);
             }
 
             @Override
