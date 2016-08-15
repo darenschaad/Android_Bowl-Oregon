@@ -104,10 +104,13 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void createGameInFirebaseHelper(final double score, final Date date, final String alleyName) {
+    private void createGameInFirebaseHelper(final double score, final Date date, final Alley alleyName) {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-        final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid).child(alleyName.replaceAll("\\s", ""));
-        Game newGame = new Game(score, date, alleyName);
+        Log.d("test", userUid +"");
+        Log.d("test", alleyName.getName());
+        final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid).child(alleyName.getName().replaceAll("\\s+", ""));
+
+        Game newGame = new Game(score, date, alleyName.getName());
         Firebase gameRef = gameLocation.push();
         String pushId = gameRef.getKey();
         newGame.setPushId(pushId);
@@ -123,17 +126,18 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
 
                 if (!scoreString.equals("")) {
                     int scoreInt = Integer.parseInt(scoreString);
-                    if (scoreString.equals("") || scoreInt > 300) {
-                        Toast.makeText(this, "Game could not be saved, please enter a valid score", Toast.LENGTH_SHORT).show();
-                    } if (dateString.equals("Select Date")){
+                    if (scoreInt > 300) {
+                        Log.d("scoreInt", scoreInt +"");
+                        Toast.makeText(this, "Game could not be saved, please enter a valid score, dummy", Toast.LENGTH_SHORT).show();
+                    }else if (dateString.equals("Select Date")){
                         Toast.makeText(this, "Game could not be saved, please select a date", Toast.LENGTH_SHORT).show();
-                    } if (mLocationSpinner.getSelectedItem() == null) {
+                    }else if (mLocationSpinner.getSelectedItem() == null) {
                         Toast.makeText(this, "Game could not be saved, please select a bowling alley", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         double enteredScore = Double.parseDouble(scoreString);
                         Date enteredDate = parseDate(year_x + "-" + month_x + "-" + day_x);
-                        String enteredLocation = mLocationSpinner.getSelectedItem().toString();
+                        Alley enteredLocation = (Alley) mLocationSpinner.getSelectedItem();
                         createGameInFirebaseHelper(enteredScore, enteredDate, enteredLocation);
                         Toast.makeText(this, "Game Saved!", Toast.LENGTH_SHORT).show();
                         mEditTextScore.setText("");

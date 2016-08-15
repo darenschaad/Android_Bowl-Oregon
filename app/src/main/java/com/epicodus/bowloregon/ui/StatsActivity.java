@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.adapters.FirebaseGameListAdapter;
+import com.epicodus.bowloregon.adapters.SpinnerAdapter;
+import com.epicodus.bowloregon.models.Alley;
 import com.epicodus.bowloregon.models.Game;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -27,6 +29,7 @@ import com.firebase.client.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -44,7 +47,7 @@ public class StatsActivity extends AppCompatActivity {
     @Bind(R.id.averageByAlleyTextView) TextView mAverageByAlleyTextView;
 
     private Firebase mFirebaseUserAlleysRef;
-    private ArrayList<String> mUserAlleys = new ArrayList<>();
+    private ArrayList<Alley> mUserAlleys = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,23 +100,51 @@ public class StatsActivity extends AppCompatActivity {
             }
         });
     }
+
     private void populateAlleySpinner() {
         mFirebaseUserAlleysRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mUserAlleys.clear();
                 for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
-                    mUserAlleys.add(alleySnapshot.getValue().toString());
+                    Log.d("AlleySnapshot", alleySnapshot.getValue() + "");
+                    HashMap<String, Object> hashMap = (HashMap<String, Object>) alleySnapshot.getValue();
+                    Alley alley = new Alley(hashMap);
+                    Log.d("alleyObject", alley.toString());
+                    mUserAlleys.add(alley);
+
+//                    Alley alley = (Alley) alleySnapshot.getValue();
+//                    mUserAlleys.add(alleySnapshot.getValue().toString());
+//                    mUserAlleys.add(alley.getName() + " - " + alley.getCity());
                 }
-                ArrayAdapter adapter = new ArrayAdapter(StatsActivity.this, android.R.layout.simple_spinner_item, mUserAlleys);
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                SpinnerAdapter adapter = new SpinnerAdapter(StatsActivity.this, R.layout.spinner_alley, mUserAlleys);
+                adapter.setDropDownViewResource(R.layout.spinner_alley);
                 mAverageAlleySpinner.setAdapter(adapter);
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+
             }
         });
     }
+
+//    private void populateAlleySpinner() {
+//        mFirebaseUserAlleysRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                mUserAlleys.clear();
+//                for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
+//                    mUserAlleys.add(alleySnapshot.getValue().toString());
+//                }
+//                ArrayAdapter adapter = new ArrayAdapter(StatsActivity.this, android.R.layout.simple_spinner_item, mUserAlleys);
+//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+//                mAverageAlleySpinner.setAdapter(adapter);
+//            }
+//            @Override
+//            public void onCancelled(FirebaseError firebaseError) {
+//            }
+//        });
+//    }
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
         long factor = (long) Math.pow(10, places);
@@ -124,7 +155,10 @@ public class StatsActivity extends AppCompatActivity {
 
     private void setUpFirebaseQuery() {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+        Log.d("userUid", userUid);
+//        Log.d("location", mFirebaseGamesRef.child(userUid).child(mAverageAlleySpinner.getSelectedItem().toString().replaceAll("\\s", "")).toString());
         String location = mFirebaseGamesRef.child(userUid).child(mAverageAlleySpinner.getSelectedItem().toString().replaceAll("\\s", "")).toString();
+
         mQuery = new Firebase(location);
         mQuery.addValueEventListener(new ValueEventListener() {
             @Override
