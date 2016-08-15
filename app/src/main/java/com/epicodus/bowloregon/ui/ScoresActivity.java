@@ -104,13 +104,13 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void createGameInFirebaseHelper(final double score, final Date date, final Alley alleyName) {
+    private void createGameInFirebaseHelper(final double score, final Date date, final Alley alley) {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         Log.d("test", userUid +"");
-        Log.d("test", alleyName.getName());
-        final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid).child(alleyName.getName().replaceAll("\\s+", ""));
+        Log.d("test", alley.getName());
+        final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid).child(alley.getName().replaceAll("\\s+", ""));
 
-        Game newGame = new Game(score, date, alleyName.getName());
+        Game newGame = new Game(score, date, alley.getName());
         Firebase gameRef = gameLocation.push();
         String pushId = gameRef.getKey();
         newGame.setPushId(pushId);
@@ -137,8 +137,8 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
                     else {
                         double enteredScore = Double.parseDouble(scoreString);
                         Date enteredDate = parseDate(year_x + "-" + month_x + "-" + day_x);
-                        Alley enteredLocation = (Alley) mLocationSpinner.getSelectedItem();
-                        createGameInFirebaseHelper(enteredScore, enteredDate, enteredLocation);
+                        Alley alley = (Alley) mLocationSpinner.getSelectedItem();
+                        createGameInFirebaseHelper(enteredScore, enteredDate, alley);
                         Toast.makeText(this, "Game Saved!", Toast.LENGTH_SHORT).show();
                         mEditTextScore.setText("");
                     }
