@@ -104,14 +104,14 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
 
         private void openDialog(final Alley alley) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-            builder.setTitle("Add Alley To Track Scores at This Alley?");
-            builder.setMessage("Add Alley To Track Scores at This Alley?");
+            builder.setTitle("Track games at " + alley.getName() + " ?");
+            builder.setMessage("Saving alley allows you to track your scores.");
 //            builder.setView(subView);
             AlertDialog alertDialog = builder.create();
 
 
 
-            builder.setPositiveButton("SAVE", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton("SAVE ALLEY", new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -124,15 +124,15 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
 //                    if ()
                     saveAlleyToFirebase(alley);
 
-                    Toast.makeText(mContext, "You can now save scores to this bowling alley!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "You can now save scores to " + alley.getName(), Toast.LENGTH_SHORT).show();
 
                 }
             });
 
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(mContext, "Cancel", Toast.LENGTH_LONG).show();
+                    Toast.makeText(mContext, "Alley Was Not Saved", Toast.LENGTH_LONG).show();
                 }
             });
 

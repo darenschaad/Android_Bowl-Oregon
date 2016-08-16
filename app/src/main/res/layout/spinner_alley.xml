@@ -6,5 +6,5 @@ android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:textSize="20sp"
 android:textColor="#ff0000"
-    android:text="Alley Name"
+    android:text="Add An Alley"
     android:singleLine="true" />
