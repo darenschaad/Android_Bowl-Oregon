@@ -128,23 +128,7 @@ public class StatsActivity extends AppCompatActivity {
         });
     }
 
-//    private void populateAlleySpinner() {
-//        mFirebaseUserAlleysRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                mUserAlleys.clear();
-//                for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
-//                    mUserAlleys.add(alleySnapshot.getValue().toString());
-//                }
-//                ArrayAdapter adapter = new ArrayAdapter(StatsActivity.this, android.R.layout.simple_spinner_item, mUserAlleys);
-//                adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-//                mAverageAlleySpinner.setAdapter(adapter);
-//            }
-//            @Override
-//            public void onCancelled(FirebaseError firebaseError) {
-//            }
-//        });
-//    }
+
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
         long factor = (long) Math.pow(10, places);
@@ -156,7 +140,7 @@ public class StatsActivity extends AppCompatActivity {
     private void setUpFirebaseQuery() {
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         Alley alley = (Alley) mAverageAlleySpinner.getSelectedItem();
-        String location = mFirebaseGamesRef.child(userUid).child(alley.getName().replaceAll("\\s", "")).toString();
+        String location = mFirebaseGamesRef.child(userUid).child(alley.getId().replaceAll("\\s", "")).toString();
 
         mQuery = new Firebase(location);
         mQuery.addValueEventListener(new ValueEventListener() {
