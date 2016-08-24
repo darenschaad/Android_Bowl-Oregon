@@ -107,10 +107,10 @@ public class StatsActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mUserAlleys.clear();
                 for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
-                    Log.d("AlleySnapshot", alleySnapshot.getValue() + "");
+//                    Log.d("AlleySnapshot", alleySnapshot.getValue() + "");
                     HashMap<String, Object> hashMap = (HashMap<String, Object>) alleySnapshot.getValue();
                     Alley alley = new Alley(hashMap);
-                    Log.d("alleyObject", alley.toString());
+//                    Log.d("alleyObject", alley.toString());
                     mUserAlleys.add(alley);
 
 //                    Alley alley = (Alley) alleySnapshot.getValue();

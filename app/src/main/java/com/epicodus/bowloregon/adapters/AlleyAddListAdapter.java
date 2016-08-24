@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,15 @@ import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.models.Alley;
 import com.epicodus.bowloregon.ui.AlleyAddActivity;
 import com.epicodus.bowloregon.util.ItemTouchHelperViewHolder;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.Query;
+import com.firebase.client.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -36,10 +42,12 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
     private static final int MAX_WIDTH = 200;
     private static final int MAX_HEIGHT = 200;
     private ArrayList<Alley> mAlleys = new ArrayList<>();
+    private Query mQuery;
     private Context mContext;
     private Firebase mFirebaseScoreAlleysRef;
     private Firebase mFirebaseUserAlleysRef;
     private SharedPreferences mSharedPreferences;
+    private ArrayList<String> mUserAlleyIds = new ArrayList<>();
 
     public AlleyAddListAdapter(Context context, ArrayList<Alley> alleys) {
         mContext = context;
@@ -106,15 +114,63 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setTitle("Track games at " + alley.getName() + " ?");
             builder.setMessage("Saving alley allows you to track your scores.");
-//            builder.setView(subView);
             AlertDialog alertDialog = builder.create();
-
-
 
             builder.setPositiveButton("SAVE ALLEY", new DialogInterface.OnClickListener() {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+                    String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
+                    mFirebaseUserAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
+                    mFirebaseUserAlleysRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            mUserAlleyIds.clear();
+                            for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
+                                Log.d("AlleySnapshot", alleySnapshot.getValue() + "");
+                                HashMap<String, Object> hashMap = (HashMap<String, Object>) alleySnapshot.getValue();
+                                Alley alleyCheck = new Alley(hashMap);
+                                String alleyId = alleyCheck.getId();
+                                Log.d("alleyObject", alleyCheck.getName());
+                                mUserAlleyIds.add(alleyId);
+
+//                    Alley alley = (Alley) alleySnapshot.getValue();
+//                    mUserAlleys.add(alleySnapshot.getValue().toString());
+//                    mUserAlleys.add(alley.getName() + " - " + alley.getCity());
+                            }
+                            if (mUserAlleyIds.contains(alley.getId())){
+                                Toast.makeText(mContext, "You already have " + alley.getName() + " saved", Toast.LENGTH_SHORT).show();
+
+                            }
+                            else {
+                                saveAlleyToFirebase(alley);
+                                Toast.makeText(mContext, "You can now save scores to " + alley.getName(), Toast.LENGTH_SHORT).show();
+                            }
+
+                        }
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+//                    final Query returnAllUserAlleys = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
+//                    returnAllUserAlleys.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            Iterable<DataSnapshot> savedAlleys = dataSnapshot.getChildren();
+//                            for (DataSnapshot alley : savedAlleys) {
+//                                mUserAlleys.add(alley);
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(FirebaseError firebaseError) {
+//
+//                        }
+//                    });
+
+
+
 //                    String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
 //                    mFirebaseUserAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
 //                    for (:
@@ -122,9 +178,9 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
 //
 //                    }
 //                    if ()
-                    saveAlleyToFirebase(alley);
 
-                    Toast.makeText(mContext, "You can now save scores to " + alley.getName(), Toast.LENGTH_SHORT).show();
+
+
 
                 }
             });
