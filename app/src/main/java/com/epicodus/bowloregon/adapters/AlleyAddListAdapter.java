@@ -2,6 +2,7 @@ package com.epicodus.bowloregon.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +22,7 @@ import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.models.Alley;
 import com.epicodus.bowloregon.ui.AlleyAddActivity;
+import com.epicodus.bowloregon.ui.ScoresActivity;
 import com.epicodus.bowloregon.util.ItemTouchHelperViewHolder;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -122,21 +124,16 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
                 public void onClick(DialogInterface dialog, int which) {
                     String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
                     mFirebaseUserAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
-                    mFirebaseUserAlleysRef.addValueEventListener(new ValueEventListener() {
+                    mFirebaseUserAlleysRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             mUserAlleyIds.clear();
                             for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
-                                Log.d("AlleySnapshot", alleySnapshot.getValue() + "");
                                 HashMap<String, Object> hashMap = (HashMap<String, Object>) alleySnapshot.getValue();
                                 Alley alleyCheck = new Alley(hashMap);
                                 String alleyId = alleyCheck.getId();
-                                Log.d("alleyObject", alleyCheck.getName());
                                 mUserAlleyIds.add(alleyId);
 
-//                    Alley alley = (Alley) alleySnapshot.getValue();
-//                    mUserAlleys.add(alleySnapshot.getValue().toString());
-//                    mUserAlleys.add(alley.getName() + " - " + alley.getCity());
                             }
                             if (mUserAlleyIds.contains(alley.getId())){
                                 Toast.makeText(mContext, "You already have " + alley.getName() + " saved", Toast.LENGTH_SHORT).show();
@@ -145,6 +142,8 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
                             else {
                                 saveAlleyToFirebase(alley);
                                 Toast.makeText(mContext, "You can now save scores to " + alley.getName(), Toast.LENGTH_SHORT).show();
+                                return;
+
                             }
 
                         }
@@ -153,35 +152,6 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
 
                         }
                     });
-//                    final Query returnAllUserAlleys = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
-//                    returnAllUserAlleys.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            Iterable<DataSnapshot> savedAlleys = dataSnapshot.getChildren();
-//                            for (DataSnapshot alley : savedAlleys) {
-//                                mUserAlleys.add(alley);
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(FirebaseError firebaseError) {
-//
-//                        }
-//                    });
-
-
-
-//                    String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-//                    mFirebaseUserAlleysRef = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
-//                    for (:
-//                         ) {
-//
-//                    }
-//                    if ()
-
-
-
-
                 }
             });
 
@@ -211,7 +181,8 @@ public class AlleyAddListAdapter extends RecyclerView.Adapter<AlleyAddListAdapte
             String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
             final Firebase userAlleyLocation = new Firebase(Constants.FIREBASE_URL_USER_ALLEYS).child(userUid);
             userAlleyLocation.push().setValue(alley);
-
+            mContext.startActivity(new Intent(mContext, ScoresActivity.class));
+            return;
         }
     }
 }
