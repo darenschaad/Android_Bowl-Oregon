@@ -16,11 +16,12 @@
         android:layout_height="40dp"
         android:text="Current Lifetime Average"
         android:id="@+id/averageTextView"
+        android:textColor="@color/colorPrimary"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textSize="20sp" />
+        android:textSize="26sp" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -39,7 +40,7 @@
         android:layout_below="@+id/averageTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:textSize="18sp" />
 
     <Spinner
@@ -55,11 +56,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Average By Alley"
+        android:textColor="@color/colorPrimary"
         android:id="@+id/averageByAlleyTextView"
         android:layout_below="@+id/averageAlleySpinner"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="18sp" />
+        android:textSize="22sp" />
 
 
 </RelativeLayout>

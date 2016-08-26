@@ -80,7 +80,7 @@ public class StatsActivity extends AppCompatActivity {
                     }
                 }
                 double averagePins = round(total/numberOfGamesPlayed, 3);
-                mAverageTextView.setText("Current Total Average: " + averagePins + "");
+                mAverageTextView.setText("Lifetime Average: " + averagePins + "");
             }
 
             @Override
@@ -158,7 +158,7 @@ public class StatsActivity extends AppCompatActivity {
                 }
                 double averagePins = round(total/numberOfGamesPlayed, 2);
                 Alley alley = (Alley) mAverageAlleySpinner.getSelectedItem();
-                mAverageByAlleyTextView.setText("Current Average at " + alley.getName() + ": " + averagePins);
+                mAverageByAlleyTextView.setText("Ally Average : " + averagePins);
             }
 
             @Override

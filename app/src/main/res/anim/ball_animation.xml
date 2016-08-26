@@ -12,10 +12,10 @@
     <rotate
         android:startOffset="1200"
         android:fromDegrees="0"
-        android:toDegrees="480"
+        android:toDegrees="-480"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:duration="1200"/>
+        android:duration="1600"/>
 
     <translate
         android:fromXDelta="0"
@@ -25,11 +25,19 @@
         android:duration="1200"/>
 
     <translate
-        android:startOffset="1200"
+        android:startOffset="1000"
         android:fromXDelta="0"
-        android:toXDelta="280%"
+        android:toXDelta="-280%"
         android:pivotX="50%"
         android:pivotY="50%"
-        android:duration="1200"/>
+        android:duration="1600"/>
+
+    <translate
+        android:startOffset="2800"
+        android:fromXDelta="0"
+        android:toXDelta="560%"
+        android:pivotX="50%"
+        android:pivotY="50%"
+        android:duration="200"/>
 
 </set>

@@ -34,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Score"
+            android:textColor="@color/colorPrimaryDark"
             android:id="@+id/textViewScore"
             android:textSize="20sp"
             android:layout_row="0"
@@ -44,6 +45,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/editTextScore"
             android:layout_row="0"
+            android:textColor="@color/colorAccent"
             android:layout_column="1"
             android:inputType="number" />
 
@@ -51,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date"
+            android:textColor="@color/colorPrimaryDark"
             android:id="@+id/textViewDate"
             android:layout_row="1"
             android:layout_column="0"
@@ -63,6 +66,7 @@
             android:id="@+id/dateEditText"
             android:layout_row="1"
             android:layout_column="1"
+            android:textColor="@color/colorAccent"
             android:text="Select Date"
             android:textSize="20sp" />
 
@@ -80,6 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Location"
+            android:textColor="@color/colorPrimaryDark"
             android:id="@+id/textViewLocation"
             android:layout_row="3"
             android:layout_column="0"
@@ -114,16 +119,18 @@
         android:layout_column="1"
         android:textColor="#ffffff"
         android:background="@drawable/bluebutton"
-        android:layout_below="@+id/gridLayout"
+        android:layout_above="@+id/buttonViewStats"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="36dp" />
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="View Stats"
         android:id="@+id/buttonViewStats"
+        android:textColor="#ffffff"
+        android:background="@drawable/orangebutton"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
