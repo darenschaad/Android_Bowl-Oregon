@@ -55,6 +55,7 @@ public class YelpActivity extends AppCompatActivity {
         String location = intent.getStringExtra("location");
         if (!(location.equals(""))) {
             getAlleys(location);
+
         }
         else if (mRecentAddress != null){
             getAlleys(mRecentAddress);

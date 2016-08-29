@@ -14,6 +14,7 @@ import android.os.Bundle;
 
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -61,12 +62,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mSharedPreferencesEditor;
     Context mContext;
-//    private SensorManager mSensorManager;
-//    private Sensor mSensor;
-//    private long lastUpdate = 0;
-//    private float last_x, last_y, last_z;
-//    private static final int SHAKE_THRESHOLD = 1000;
-//    private static final String DEBUG_TAG = "Gestures";
     public Animation pinFallAnimation;
 
     @Override
@@ -76,10 +71,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
 
         pinFallAnimation = AnimationUtils.loadAnimation(this, R.anim.pin_animation);
-//        flingAnimation = AnimationUtils.loadAnimation(mContext, R.anim.ball_animation);
-//        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-//        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-//        mSensorManager.registerListener(this, mSensor, mSensorManager.SENSOR_DELAY_NORMAL);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mSharedPreferencesEditor = mSharedPreferences.edit();
         mUid = mSharedPreferences.getString(Constants.KEY_UID, null);
@@ -87,8 +78,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
         mButtonScores.setOnClickListener(this);
         mButtonStats.setOnClickListener(this);
-//        mButtonAlleys.setOnClickListener(this);
         mButtonYelp.setOnClickListener(this);
+
+//        addCourseText = (EditText) findViewById(R.id.clEtAddCourse);
+        mLocationEditText.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            yelpApiFunction();
+                            return true;
+                        default:
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
 
         final GestureDetector detector = new GestureDetector(this, new FlingListener(mBallImageView, this));
         mBallImageView.setOnTouchListener(new View.OnTouchListener() {
@@ -185,6 +196,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         finish();
     }
 
+    private void yelpApiFunction(){
+        String location = mLocationEditText.getText().toString();
+        if (!(location.equals(""))) {
+            mSharedPreferencesEditor.putString(Constants.PREFERENCES_LOCATION_KEY, location).apply();
+        }
+        Intent intent3 = new Intent(MainActivity.this, YelpActivity.class);
+        intent3.putExtra("location", location);
+        startActivity(intent3);
+    }
+
+
 
     @Override
     public void onClick(View v) {
@@ -199,13 +221,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent1);
                 break;
             case R.id.buttonYelp:
-                String location = mLocationEditText.getText().toString();
-                if (!(location.equals(""))) {
-                    mSharedPreferencesEditor.putString(Constants.PREFERENCES_LOCATION_KEY, location).apply();
-                }
-                Intent intent3 = new Intent(MainActivity.this, YelpActivity.class);
-                intent3.putExtra("location", location);
-                startActivity(intent3);
+                yelpApiFunction();
             default:
                 break;
         }
