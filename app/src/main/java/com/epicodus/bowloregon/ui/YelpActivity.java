@@ -1,5 +1,6 @@
 package com.epicodus.bowloregon.ui;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -39,6 +40,7 @@ public class YelpActivity extends AppCompatActivity {
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
     private String mRecentAddress;
+    public Context parentContext;
 
     public ArrayList<Alley> mAlleys = new ArrayList<>();
 
@@ -50,6 +52,7 @@ public class YelpActivity extends AppCompatActivity {
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
+        parentContext = getApplicationContext();
 
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");
