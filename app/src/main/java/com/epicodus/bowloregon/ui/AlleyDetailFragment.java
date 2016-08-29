@@ -100,7 +100,7 @@ public class AlleyDetailFragment extends Fragment implements View.OnClickListene
     private void openDialog(final Alley alley) {
         final Context mContext = getContext();
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-        builder.setTitle("Track games at " + alley.getName() + " ?");
+        builder.setTitle("Would you like to save " + alley.getName() + " ?");
         builder.setMessage("Saving alley allows you to track your scores.");
         AlertDialog alertDialog = builder.create();
 
@@ -173,13 +173,6 @@ public class AlleyDetailFragment extends Fragment implements View.OnClickListene
         }
         if (v == mSaveAlleyButton) {
             openDialog(mAlley);
-//            String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-//            Firebase userAlleysFirebaseRef = new Firebase(Constants.FIREBASE_URL_ALLEYS).child(userUid);
-//            Firebase pushRef = userAlleysFirebaseRef.push();
-//            String alleyPushId = pushRef.getKey();
-//            mAlley.setPushId(alleyPushId);
-//            pushRef.setValue(mAlley);
-//            Toast.makeText(getContext(), "Saved", Toast.LENGTH_SHORT).show();
         }
         if (v == mWebsiteLabel) {
             Intent webIntent = new Intent(Intent.ACTION_VIEW,
