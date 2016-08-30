@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -29,7 +30,9 @@ import com.firebase.client.ValueEventListener;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,7 +43,9 @@ public class StatsActivity extends AppCompatActivity {
     private ValueEventListener mGameRefListener;
     private String mUId;
     private FirebaseGameListAdapter mAdapter;
+    private Adapter mReverseAdapter;
     private SharedPreferences mSharedPreferences;
+    private LinearLayoutManager mLayoutManager;
     @Bind(R.id.recyclerView) RecyclerView mRecylerView;
     @Bind(R.id.averageTextView) TextView mAverageTextView;
     @Bind(R.id.averageAlleySpinner) Spinner mAverageAlleySpinner;
@@ -169,7 +174,10 @@ public class StatsActivity extends AppCompatActivity {
 
     private void setUpRecyclerView() {
         mAdapter = new FirebaseGameListAdapter(mQuery.orderByChild("date"), Game.class);
-        mRecylerView.setLayoutManager(new LinearLayoutManager(this));
+        mLayoutManager = new LinearLayoutManager(this);
+        mLayoutManager.setReverseLayout(true);
+        mLayoutManager.setStackFromEnd(true);
+        mRecylerView.setLayoutManager(mLayoutManager);
         mRecylerView.setAdapter(mAdapter);
     }
 }
