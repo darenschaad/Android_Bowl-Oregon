@@ -161,9 +161,15 @@ public class StatsActivity extends AppCompatActivity {
                     total += totalPins;
                     numberOfGamesPlayed ++;
                 }
-                double averagePins = round(total/numberOfGamesPlayed, 2);
-                Alley alley = (Alley) mAverageAlleySpinner.getSelectedItem();
-                mAverageByAlleyTextView.setText("Ally Average : " + averagePins);
+                Log.d("Games Played", numberOfGamesPlayed +"");
+                if (numberOfGamesPlayed == 0){
+                    mAverageByAlleyTextView.setText("No Scores Recorded");
+                }else{
+                    double averagePins = round(total/numberOfGamesPlayed, 2);
+                    Alley alley = (Alley) mAverageAlleySpinner.getSelectedItem();
+                    mAverageByAlleyTextView.setText("Ally Average : " + averagePins);
+                }
+
             }
 
             @Override

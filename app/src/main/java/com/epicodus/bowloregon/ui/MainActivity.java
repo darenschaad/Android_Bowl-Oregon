@@ -1,13 +1,19 @@
 package com.epicodus.bowloregon.ui;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +32,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.R;
@@ -37,14 +44,22 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.Query;
 import com.firebase.client.ValueEventListener;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    // implement these too for location services maybe GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener
 //    public class MainActivity extends AppCompatActivity implements View.OnClickListener, SensorEventListener {
     public static final String TAG = MainActivity.class.getSimpleName();
+    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     @Bind(R.id.buttonScores) Button mButtonScores;
     @Bind(R.id.buttonStats) Button mButtonStats;
 //    @Bind(R.id.buttonAlleys) Button mButtonAlleys;
@@ -54,15 +69,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Bind(R.id.ballImageView) ImageView mBallImageView;
     @Bind(R.id.pinImageView) ImageView mPinImageView;
     @Bind(R.id.currentAverageTextView) TextView mCurrentAverageTextView;
+//    @Bind(R.id.tempTextTextView) TextView mTempTextView;
 
     private ValueEventListener mUserRefListener;
     private Firebase mFirebaseRef;
     private Firebase mUserRef;
     private String mUid;
+    private String mRecentAddress;
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mSharedPreferencesEditor;
     Context mContext;
     public Animation pinFallAnimation;
+
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+    private Location mLastLocation;
+    private GoogleApiClient mGoogleApiClient;
+    private boolean mRequestLocationUpdates = false;
+    private LocationRequest mLocationRequest;
+    private static int UPDATE_INTERVAL = 10000;
+    private static int FASTEST_INTERVAL = 5000;
+    private static int DISPLACEMENT = 10;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,7 +183,209 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onCancelled(FirebaseError firebaseError) {
             }
         });
+
+//        // Here, thisActivity is the current activity
+//        if (ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.ACCESS_FINE_LOCATION)
+//                != PackageManager.PERMISSION_GRANTED) {
+//
+//            // Should we show an explanation?
+//            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+//                    Manifest.permission.ACCESS_FINE_LOCATION)) {
+//
+//                // Show an expanation to the user *asynchronously* -- don't block
+//                // this thread waiting for the user's response! After the user
+//                // sees the explanation, try again to request the permission.
+//
+//            } else {
+//
+//                // No explanation needed, we can request the permission.
+//
+//                ActivityCompat.requestPermissions(this,
+//                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+//                        MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
+//
+//                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+//                // app-defined int constant. The callback method gets the
+//                // result of the request.
+//            }
+//        }
+//
+//        int permissionCheck = ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.ACCESS_FINE_LOCATION);
+//
+//        if (checkPlayServices()) {
+//            buildGoogleApiClient();
+//            createLocationRequest();
+//        }
+
+//        private void showPermissionDialog() {
+//            if (!LocationController.checkPermission(this)) {
+//                ActivityCompat.requestPermissions(
+//                        this,
+//                        new String[]{ Manifest.permission.ACCESS_FINE_LOCATION},
+//                        PERMISSION_LOCATION_REQUEST_CODE);
+//            }
+//        }
     }
+
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode,
+//                                           String permissions[], int[] grantResults) {
+//        switch (requestCode) {
+//            case MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION: {
+//                // If request is cancelled, the result arrays are empty.
+//                if (grantResults.length > 0
+//                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//
+//                    // permission was granted, yay! Do the
+//                    // contacts-related task you need to do.
+//
+//                } else {
+//
+//                    // permission denied, boo! Disable the
+//                    // functionality that depends on this permission.
+//                }
+//                return;
+//            }
+//
+//            // other 'case' lines to check for other
+//            // permissions this app might request
+//        }
+//    }
+//
+//    public static boolean checkPermission(final Context context) {
+//        return ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+//                && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+//    }
+//
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        if(mGoogleApiClient != null) {
+//            mGoogleApiClient.connect();
+//        }
+//    }
+//
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        checkPlayServices();
+//        if (mGoogleApiClient.isConnected() && mRequestLocationUpdates) {
+//            startLocationUpdates();
+//        }
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        if (mGoogleApiClient.isConnected()) {
+//            mGoogleApiClient.disconnect();
+//        }
+//    }
+//
+//    @Override
+//    protected void onPause() {
+//        super.onPause();
+//        stopLocationUpdates();
+//    }
+//
+//    private void displayLocation() {
+//        mLastLocation= LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+//        Log.d("last location", mLastLocation +"");
+//        if (mLastLocation != null) {
+//            double latitude = mLastLocation.getLatitude();
+//            double longitude = mLastLocation.getLongitude();
+//
+//            mTempTextView.setText(latitude + "," + longitude);
+//        }
+//        else {
+//            mTempTextView.setText("Could not find your location");
+//        }
+//    }
+//
+////    private void togglePeriodLocationUpdates() {
+////        if (!mRequestLocationUpdates){
+////
+////        }
+////
+////    }
+//
+//    protected synchronized void buildGoogleApiClient(){
+//        mGoogleApiClient = new GoogleApiClient.Builder(this)
+//                .addConnectionCallbacks(this)
+//                .addOnConnectionFailedListener(this)
+//                .addApi(LocationServices.API).build();
+//    }
+//
+//    protected void createLocationRequest(){
+//        mLocationRequest = new LocationRequest();
+//        mLocationRequest.setInterval(UPDATE_INTERVAL);
+//        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+//        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+//        mLocationRequest.setSmallestDisplacement(DISPLACEMENT);
+//    }
+//
+//    private boolean checkPlayServices() {
+//        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+//        if (resultCode != ConnectionResult.SUCCESS){
+//            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)){
+//                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+//            }else {
+//                Toast.makeText(this,"This Device is not Supported", Toast.LENGTH_LONG).show();
+//                finish();
+//            }
+//            return false;
+//        }
+//        return true;
+//    }
+//
+//    protected void startLocationUpdates() {
+//
+//        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+//    }
+//
+//    protected void stopLocationUpdates() {
+//        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
+//    }
+//
+//    @Override
+//    public void onConnected(Bundle bundle) {
+//        displayLocation();
+//        if (mRequestLocationUpdates){
+//            startLocationUpdates();
+//        }
+//    }
+//
+//    @Override
+//    public void onConnectionSuspended(int i) {
+//        mGoogleApiClient.connect();
+//    }
+//
+//    @Override
+//    public void onLocationChanged(Location location) {
+//        mLastLocation = location;
+//
+//        Toast.makeText(getApplicationContext(), "Location Changed!", Toast.LENGTH_SHORT).show();
+//
+//        displayLocation();
+//    }
+//
+//    @Override
+//    public void onConnectionFailed(ConnectionResult connectionResult) {
+//        Log.i(TAG, "Connection failed: " + connectionResult.getErrorCode());
+//    }
+//
+////    @Override
+////    public void enableMyLocation() {
+////        if (ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.ACCESS_FINE_LOCATION)
+////                != PackageManager.PERMISSION_GRANTED) {
+////            PermissionUtils.requestPermission((FragmentActivity) mContext, LOCATION_PERMISSION_REQUEST_CODE,
+////                    android.Manifest.permission.ACCESS_FINE_LOCATION, true);
+//////        } else if (mMap != null) {
+//////            mMap.setMyLocationEnabled(true);
+//////        }
+////    }
 
     public static double round(double value, int places) {
         if (places < 0) throw new IllegalArgumentException();
@@ -221,10 +450,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent1);
                 break;
             case R.id.buttonYelp:
-                yelpApiFunction();
+                String location = mLocationEditText.getText().toString();
+                mRecentAddress = mSharedPreferences.getString(Constants.PREFERENCES_LOCATION_KEY, null);
+                if (location.equals("") && mRecentAddress == null){
+                    Toast.makeText(this, "Please enter zip code or location to search for surrounding bowling alleys", Toast.LENGTH_SHORT).show();
+//                    mRequestLocationUpdates = true;
+
+//                    startLocationUpdates();
+//                    displayLocation();
+                }
+                else {
+                    yelpApiFunction();
+//                    stopLocationUpdates();
+                }
+
             default:
                 break;
         }
     }
+
+
+
 
 }
