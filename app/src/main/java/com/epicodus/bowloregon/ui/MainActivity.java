@@ -59,17 +59,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     // implement these too for location services maybe GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener
 //    public class MainActivity extends AppCompatActivity implements View.OnClickListener, SensorEventListener {
     public static final String TAG = MainActivity.class.getSimpleName();
-    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
+//    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 0;
     @Bind(R.id.buttonScores) Button mButtonScores;
     @Bind(R.id.buttonStats) Button mButtonStats;
-//    @Bind(R.id.buttonAlleys) Button mButtonAlleys;
     @Bind(R.id.buttonYelp) Button mButtonYelp;
     @Bind(R.id.editTextLocation) EditText mLocationEditText;
     @Bind(R.id.welcomeTextView) TextView mWelcomeTextView;
     @Bind(R.id.ballImageView) ImageView mBallImageView;
     @Bind(R.id.pinImageView) ImageView mPinImageView;
     @Bind(R.id.currentAverageTextView) TextView mCurrentAverageTextView;
-//    @Bind(R.id.tempTextTextView) TextView mTempTextView;
+
 
     private ValueEventListener mUserRefListener;
     private Firebase mFirebaseRef;
@@ -80,15 +79,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences.Editor mSharedPreferencesEditor;
     Context mContext;
     public Animation pinFallAnimation;
-
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
-    private Location mLastLocation;
-    private GoogleApiClient mGoogleApiClient;
-    private boolean mRequestLocationUpdates = false;
-    private LocationRequest mLocationRequest;
-    private static int UPDATE_INTERVAL = 10000;
-    private static int FASTEST_INTERVAL = 5000;
-    private static int DISPLACEMENT = 10;
+//
+//    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
+//    private Location mLastLocation;
+//    private GoogleApiClient mGoogleApiClient;
+//    private boolean mRequestLocationUpdates = false;
+//    private LocationRequest mLocationRequest;
+//    private static int UPDATE_INTERVAL = 10000;
+//    private static int FASTEST_INTERVAL = 5000;
+//    private static int DISPLACEMENT = 10;
 
 
     @Override
@@ -107,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonStats.setOnClickListener(this);
         mButtonYelp.setOnClickListener(this);
 
-//        addCourseText = (EditText) findViewById(R.id.clEtAddCourse);
         mLocationEditText.setOnKeyListener(new View.OnKeyListener()
         {
             public boolean onKey(View v, int keyCode, KeyEvent event)
@@ -398,7 +396,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_search, menu);
         inflater.inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -461,7 +458,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 else {
                     yelpApiFunction();
-//                    stopLocationUpdates();
                 }
 
             default:
