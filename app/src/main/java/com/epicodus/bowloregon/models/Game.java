@@ -10,13 +10,17 @@ public class Game {
     Date date;
     String alleyName;
     String pushId;
+    String alleyId;
 
     public Game() {}
 
-    public Game(double score, Date date, String alleyName) {
+
+
+    public Game(double score, Date date, String alleyName, String alleyId) {
         this.score = score;
         this.date = date;
         this.alleyName = alleyName;
+        this.alleyId = alleyId;
     }
 
     public Date getDate() {
@@ -42,4 +46,12 @@ public class Game {
     public void setPushId(String pushId) {
         this.pushId = pushId;
     }
+
+    public String getAlleyId() {
+        return alleyId;
+    }
+    public void setAlleyId(String alleyId) {
+        this.alleyId = alleyId;
+    }
+
 }

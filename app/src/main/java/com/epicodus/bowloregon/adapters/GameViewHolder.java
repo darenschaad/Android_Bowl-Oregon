@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.epicodus.bowloregon.models.Alley;
 import com.firebase.client.Firebase;
 
 import com.epicodus.bowloregon.Constants;
@@ -71,6 +73,7 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteItemFromFirebase(game);
+                Log.d("Deleted Game", game.getScore() + "");
                 Toast.makeText(mContext, "Deleted forEVER", Toast.LENGTH_SHORT).show();
 
             }
@@ -88,10 +91,11 @@ public class GameViewHolder extends RecyclerView.ViewHolder {
 
     public void deleteItemFromFirebase(Game game) {
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String alleyId = game.getAlleyId();
         String userUid = mSharedPreferences.getString(Constants.KEY_UID, null);
         String id = game.getPushId();
         String alleyName = game.getAlleyName();
-        Firebase savedItemRef = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid).child(alleyName.replaceAll("\\s", ""));
+        Firebase savedItemRef = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid).child(alleyId.replaceAll("\\s", ""));
         Firebase finalItem = savedItemRef.child(id);
         finalItem.removeValue();
     }
