@@ -110,7 +110,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
 //        Log.d("test", alley.getName());
         final Firebase gameLocation = new Firebase(Constants.FIREBASE_URL_GAMES).child(userUid).child(alley.getId().replaceAll("\\s+", ""));
 
-        Game newGame = new Game(score, date, alley.getName());
+        Game newGame = new Game(score, date, alley.getName(), alley.getId());
         Firebase gameRef = gameLocation.push();
         String pushId = gameRef.getKey();
         newGame.setPushId(pushId);
@@ -128,7 +128,7 @@ public class ScoresActivity extends AppCompatActivity implements View.OnClickLis
                     int scoreInt = Integer.parseInt(scoreString);
                     if (scoreInt > 300) {
                         Log.d("scoreInt", scoreInt +"");
-                        Toast.makeText(this, "Game could not be saved, please enter a valid score, dummy", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Game could not be saved, you can not score above 300", Toast.LENGTH_SHORT).show();
                     }else if (dateString.equals("Select Date")){
                         Toast.makeText(this, "Game could not be saved, please select a date", Toast.LENGTH_SHORT).show();
                     }else if (mLocationSpinner.getSelectedItem() == null) {

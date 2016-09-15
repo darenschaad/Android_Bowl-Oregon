@@ -56,7 +56,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener {
     // implement these too for location services maybe GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener
 //    public class MainActivity extends AppCompatActivity implements View.OnClickListener, SensorEventListener {
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -97,6 +97,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mLocationEditText.setOnEditorActionListener(this);
+
         pinFallAnimation = AnimationUtils.loadAnimation(this, R.anim.pin_animation);
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mSharedPreferencesEditor = mSharedPreferences.edit();
@@ -120,6 +122,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 return handled;
             }
         });
+
+//        mLocationEditText.setOnKeyListener(new View.OnKeyListener()
+//        {
+//            public boolean onKey(View v, int keyCode, KeyEvent event)
+//            {
+//                if (event.getAction() == KeyEvent.ACTION_DOWN)
+//                {
+//                    switch (keyCode)
+//                    {
+//                        case KeyEvent.KEYCODE_DPAD_CENTER:
+//                        case KeyEvent.KEYCODE_ENTER:
+//                            yelpApiFunction();
+//                            return true;
+//                        default:
+//                            break;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
 //        mLocationEditText.setOnKeyListener(new View.OnKeyListener()
 //        {
@@ -197,6 +219,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+
+
 //        // Here, thisActivity is the current activity
 //        if (ContextCompat.checkSelfPermission(this,
 //                Manifest.permission.ACCESS_FINE_LOCATION)
@@ -240,6 +264,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                        PERMISSION_LOCATION_REQUEST_CODE);
 //            }
 //        }
+    }
+
+
+    @Override
+    public boolean onEditorAction(TextView textView, int actionId, KeyEvent event) {
+        if (EditorInfo.IME_ACTION_DONE == actionId) {
+              Log.d("Listener", "Listener Fired");
+            return true;
+        }
+        return false;
     }
 
 //    @Override
@@ -479,8 +513,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
-
 
 
 }
