@@ -87,7 +87,9 @@
         android:layout_below="@+id/buttonYelp"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
-        android:hint="Enter Location or Zip Code" />
+        android:hint="Enter Location or Zip Code"
+        android:inputType="text"
+        android:imeOptions="actionSend"/>
 
     <ImageView
         android:layout_width="60dp"

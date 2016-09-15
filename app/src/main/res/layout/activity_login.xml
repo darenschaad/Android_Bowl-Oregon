@@ -54,7 +54,8 @@
             android:padding="10dp"
             android:hint="Password"
             android:textColorHint="@color/colorTextIcons"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:imeOptions="actionSend"/>
 
         <Button
             android:id="@+id/passwordLoginButton"

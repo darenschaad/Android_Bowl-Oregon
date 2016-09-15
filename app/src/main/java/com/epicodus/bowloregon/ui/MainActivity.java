@@ -28,6 +28,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -106,25 +107,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mButtonStats.setOnClickListener(this);
         mButtonYelp.setOnClickListener(this);
 
-        mLocationEditText.setOnKeyListener(new View.OnKeyListener()
-        {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    switch (keyCode)
-                    {
-                        case KeyEvent.KEYCODE_DPAD_CENTER:
-                        case KeyEvent.KEYCODE_ENTER:
-                            yelpApiFunction();
-                            return true;
-                        default:
-                            break;
-                    }
+        mLocationEditText.setImeActionLabel("SEARCH", KeyEvent.KEYCODE_ENTER);
+
+        mLocationEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    yelpApiFunction();
+                    handled = true;
                 }
-                return false;
+                return handled;
             }
         });
+
+//        mLocationEditText.setOnKeyListener(new View.OnKeyListener()
+//        {
+//            public boolean onKey(View v, int keyCode, KeyEvent event)
+//            {
+//                if (event.getAction() == KeyEvent.ACTION_DOWN)
+//                {
+//                    switch (keyCode)
+//                    {
+//                        case KeyEvent.KEYCODE_DPAD_CENTER:
+//                        case KeyEvent.KEYCODE_ENTER:
+//                            yelpApiFunction();
+//                            return true;
+//                        default:
+//                            break;
+//                    }
+//                }
+//                return false;
+//            }
+//        });
 
         final GestureDetector detector = new GestureDetector(this, new FlingListener(mBallImageView, this));
         mBallImageView.setOnTouchListener(new View.OnTouchListener() {
