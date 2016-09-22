@@ -112,15 +112,9 @@ public class StatsActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mUserAlleys.clear();
                 for(DataSnapshot alleySnapshot: dataSnapshot.getChildren()) {
-//                    Log.d("AlleySnapshot", alleySnapshot.getValue() + "");
                     HashMap<String, Object> hashMap = (HashMap<String, Object>) alleySnapshot.getValue();
                     Alley alley = new Alley(hashMap);
-//                    Log.d("alleyObject", alley.toString());
                     mUserAlleys.add(alley);
-
-//                    Alley alley = (Alley) alleySnapshot.getValue();
-//                    mUserAlleys.add(alleySnapshot.getValue().toString());
-//                    mUserAlleys.add(alley.getName() + " - " + alley.getCity());
                 }
                 SpinnerAdapter adapter = new SpinnerAdapter(StatsActivity.this, R.layout.spinner_alley, mUserAlleys);
                 adapter.setDropDownViewResource(R.layout.spinner_alley);

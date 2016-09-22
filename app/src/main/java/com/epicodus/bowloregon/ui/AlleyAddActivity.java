@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.adapters.AlleyAddListAdapter;
@@ -23,7 +26,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class AlleyAddActivity extends AppCompatActivity implements View.OnClickListener {
+public class AlleyAddActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener {
         @Bind(R.id.recyclerView) RecyclerView mRecyclerView;
         @Bind(R.id.searchButton) Button mSearchButton;
         @Bind(R.id.searchEditText) EditText mSearchEditText;
@@ -37,6 +40,23 @@ public class AlleyAddActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_alley_add);
         ButterKnife.bind(this);
         mSearchButton.setOnClickListener(this);
+
+//        mSearchEditText.setImeActionLabel("SEARCH", KeyEvent.KEYCODE_ENTER);
+
+        mSearchEditText.setOnEditorActionListener(this);
+
+        mSearchEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                boolean handled = false;
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    String location = mSearchEditText.getText().toString();
+                    getAlleys(location);
+                    handled = true;
+                }
+                return handled;
+            }
+        });
     }
 
     private void getAlleys(String location) {
@@ -76,5 +96,10 @@ public class AlleyAddActivity extends AppCompatActivity implements View.OnClickL
                 getAlleys(location);
                 break;
         }
+    }
+
+    @Override
+    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+        return false;
     }
 }

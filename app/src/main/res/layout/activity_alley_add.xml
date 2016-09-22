@@ -25,7 +25,8 @@
         android:layout_below="@+id/instructionTextView2"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="56dp"
-        android:hint="Enter location or zip code" />
+        android:hint="Enter location or zip code"
+        android:imeOptions="actionSearch"/>
 
     <Button
         android:layout_width="wrap_content"

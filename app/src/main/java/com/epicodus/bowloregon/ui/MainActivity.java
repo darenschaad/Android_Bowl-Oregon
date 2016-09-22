@@ -35,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.epicodus.bowloregon.BaseActivity;
 import com.epicodus.bowloregon.Constants;
 import com.epicodus.bowloregon.R;
 import com.epicodus.bowloregon.models.Game;
@@ -56,7 +57,7 @@ import com.squareup.picasso.Picasso;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, TextView.OnEditorActionListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, TextView.OnEditorActionListener {
     // implement these too for location services maybe GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener
 //    public class MainActivity extends AppCompatActivity implements View.OnClickListener, SensorEventListener {
     public static final String TAG = MainActivity.class.getSimpleName();
@@ -72,13 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private ValueEventListener mUserRefListener;
-    private Firebase mFirebaseRef;
-    private Firebase mUserRef;
-    private String mUid;
-    private String mRecentAddress;
-    private SharedPreferences mSharedPreferences;
-    private SharedPreferences.Editor mSharedPreferencesEditor;
-    Context mContext;
+
     public Animation pinFallAnimation;
 //
 //    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 1000;
@@ -100,68 +95,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mLocationEditText.setOnEditorActionListener(this);
 
         pinFallAnimation = AnimationUtils.loadAnimation(this, R.anim.pin_animation);
-        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mSharedPreferencesEditor = mSharedPreferences.edit();
-        mUid = mSharedPreferences.getString(Constants.KEY_UID, null);
-        mUserRef = new Firebase(Constants.FIREBASE_URL_USERS).child(mUid);
-        mFirebaseRef = new Firebase(Constants.FIREBASE_URL);
+
         mButtonScores.setOnClickListener(this);
         mButtonStats.setOnClickListener(this);
         mButtonYelp.setOnClickListener(this);
 
-        mLocationEditText.setImeActionLabel("SEARCH", KeyEvent.KEYCODE_ENTER);
+//        mLocationEditText.setImeActionLabel("SEARCH", KeyEvent.KEYCODE_ENTER);
 
         mLocationEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 boolean handled = false;
-                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    Log.d("Search", "Search button detected");
                     yelpApiFunction();
                     handled = true;
                 }
                 return handled;
             }
         });
-
-//        mLocationEditText.setOnKeyListener(new View.OnKeyListener()
-//        {
-//            public boolean onKey(View v, int keyCode, KeyEvent event)
-//            {
-//                if (event.getAction() == KeyEvent.ACTION_DOWN)
-//                {
-//                    switch (keyCode)
-//                    {
-//                        case KeyEvent.KEYCODE_DPAD_CENTER:
-//                        case KeyEvent.KEYCODE_ENTER:
-//                            yelpApiFunction();
-//                            return true;
-//                        default:
-//                            break;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
-
-//        mLocationEditText.setOnKeyListener(new View.OnKeyListener()
-//        {
-//            public boolean onKey(View v, int keyCode, KeyEvent event)
-//            {
-//                if (event.getAction() == KeyEvent.ACTION_DOWN)
-//                {
-//                    switch (keyCode)
-//                    {
-//                        case KeyEvent.KEYCODE_DPAD_CENTER:
-//                        case KeyEvent.KEYCODE_ENTER:
-//                            yelpApiFunction();
-//                            return true;
-//                        default:
-//                            break;
-//                    }
-//                }
-//                return false;
-//            }
-//        });
 
         final GestureDetector detector = new GestureDetector(this, new FlingListener(mBallImageView, this));
         mBallImageView.setOnTouchListener(new View.OnTouchListener() {
@@ -192,6 +144,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+
+
 
         final Query returnAllChildNodes = new Firebase(Constants.FIREBASE_URL_GAMES).child(mUid);
         returnAllChildNodes.addValueEventListener(new ValueEventListener() {
@@ -433,14 +387,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //////            mMap.setMyLocationEnabled(true);
 //////        }
 ////    }
-
-    public static double round(double value, int places) {
-        if (places < 0) throw new IllegalArgumentException();
-        long factor = (long) Math.pow(10, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

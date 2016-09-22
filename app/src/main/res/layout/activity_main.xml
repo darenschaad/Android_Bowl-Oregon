@@ -89,7 +89,7 @@
         android:layout_centerHorizontal="true"
         android:hint="Enter Location or Zip Code"
         android:inputType="text"
-        android:imeOptions="actionSend"/>
+        android:imeOptions="actionSearch"/>
 
     <ImageView
         android:layout_width="60dp"
